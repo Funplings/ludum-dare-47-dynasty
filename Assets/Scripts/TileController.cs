@@ -7,6 +7,7 @@ public class TileController: MonoBehaviour
     int m_XIndex;
     int m_YIndex;
     int m_TileType; // 0 = None, 1 = Farm, 2 = Lab, 3 = Mine
+    int m_Faction; // 0 = Player faction
     GameObject m_CurrSoldier;
 
     // Initalize tile attributes
