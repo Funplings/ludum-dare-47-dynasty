@@ -2,26 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject m_HappinessCount;
-    [SerializeField] GameObject m_MoneyCount;
-    [SerializeField] GameObject m_FoodCount;
-    [SerializeField] GameObject m_SoldiersCount;
+    [SerializeField] TMP_Text m_HappinessCount;
+    [SerializeField] TMP_Text m_MoneyCount;
+    [SerializeField] TMP_Text m_FoodCount;
+    [SerializeField] TMP_Text m_SoldiersCount;
+    
     public void UpdateHappinessCount(int happiness) {
-        m_HappinessCount.GetComponent<Text>().text = "Happiness: " + happiness.ToString();
+        m_HappinessCount.text = happiness.ToString();
     }
 
     public void UpdateMoneyCount(int money) {
-        m_MoneyCount.GetComponent<Text>().text = "Money: " + money.ToString();
+        m_MoneyCount.text = money.ToString();
     }
 
     public void UpdateFoodCount(int food) {
-        m_FoodCount.GetComponent<Text>().text = "Food: " + food.ToString();
+        m_FoodCount.text = food.ToString();
     }
 
     public void UpdateSoldiersCount(int soldiers) {
-        m_SoldiersCount.GetComponent<Text>().text = "Soldiers: " + soldiers.ToString();
+        m_SoldiersCount.text = soldiers.ToString();
     }
 }
