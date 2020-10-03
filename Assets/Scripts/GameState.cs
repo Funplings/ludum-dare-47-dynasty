@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 public class GameState
 {
-    int m_Happiness = 50;
-    int m_Money = Constants.STARTING_MONEY;
-    int m_Food = 0;
-    int m_Soldiers = 0;
-    //currentDynasty
+    public int m_Happiness = 50;
+    public int m_Money = Constants.STARTING_MONEY;
+    public int m_Food = 0;
+    public int m_Soldiers = 0;
+    public int turn = 0;
+    public Dynasty currentDynasty = null;
+    public List<Dynasty> allDynasties = new List<Dynasty>(); 
     //perks
 
 }
