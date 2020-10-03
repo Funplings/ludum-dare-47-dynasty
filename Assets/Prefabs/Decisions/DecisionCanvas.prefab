@@ -1560,7 +1560,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9142957781568384845}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2065334937708773922}
+        m_TargetAssemblyTypeName: DecisionManager, Assembly-CSharp
+        m_MethodName: BeginDynasty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6808053862539619977
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,6 +2399,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: PerkChoice  (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2065334937708773922}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePerk
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DecisionManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PerkChoice, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2937374906388428413}
     - target: {fileID: 8441763460770259208, guid: c17aa258606309242917bfc1edb1e4a4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2500,6 +2542,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 624860582298481608}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2937374906388428413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2335210455995696565, guid: c17aa258606309242917bfc1edb1e4a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 624860582298481608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6b20af4a427a24f91bbd87c1808d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1349038999133418132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2637,6 +2691,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: PerkChoice  (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2065334937708773922}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePerk
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DecisionManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PerkChoice, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1596929557009988726}
     - target: {fileID: 8441763460770259208, guid: c17aa258606309242917bfc1edb1e4a4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2750,6 +2834,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3909471308747913667}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1596929557009988726 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2335210455995696565, guid: c17aa258606309242917bfc1edb1e4a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 3909471308747913667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6b20af4a427a24f91bbd87c1808d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5947314761751025582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2762,6 +2858,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'PerkChoice '
       objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2065334937708773922}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePerk
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DecisionManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PerkChoice, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8277984221536817691}
     - target: {fileID: 8441763460770259208, guid: c17aa258606309242917bfc1edb1e4a4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2869,6 +2995,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c17aa258606309242917bfc1edb1e4a4, type: 3}
+--- !u!114 &8277984221536817691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2335210455995696565, guid: c17aa258606309242917bfc1edb1e4a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5947314761751025582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6b20af4a427a24f91bbd87c1808d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2859276035999807142 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8441763460770259208, guid: c17aa258606309242917bfc1edb1e4a4,
@@ -2887,6 +3025,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: PerkChoice  (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2065334937708773922}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePerk
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DecisionManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PerkChoice, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866138472287111091, guid: c17aa258606309242917bfc1edb1e4a4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8607787945430022684}
     - target: {fileID: 8441763460770259208, guid: c17aa258606309242917bfc1edb1e4a4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3000,3 +3168,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6277265876011466665}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8607787945430022684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2335210455995696565, guid: c17aa258606309242917bfc1edb1e4a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6277265876011466665}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6b20af4a427a24f91bbd87c1808d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

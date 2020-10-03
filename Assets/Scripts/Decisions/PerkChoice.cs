@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PerkChoice : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private Image check;
+
+    //public Perk perk;
+    public bool status = false;
+
+    void Start(){
+        check.enabled = status;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Toggle(){
+        status = !status;
+        check.enabled = status;
     }
 }

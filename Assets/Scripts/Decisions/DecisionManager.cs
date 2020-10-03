@@ -12,8 +12,9 @@ public class DecisionManager : MonoBehaviour
     [SerializeField] private TMP_Text dynastyCount; 
     [SerializeField] private CanvasGroup showMapButton; 
     [SerializeField] private CanvasGroup mainGroup; 
-
-    private int labsCount = 0;
+    
+    private HashSet<PerkChoice> perkChoices = new HashSet<PerkChoice>();
+    private int labsCount = 3;
 
     void Start(){
         SetupDecision();
@@ -21,7 +22,7 @@ public class DecisionManager : MonoBehaviour
 
     public void SetupDecision(){
         GameState state = GameManager.instance.state;
-        
+                
         //update lab count
         // labsCount = map.labsCount();
         labOwnedCount.text = "Labs Owned (Perk Count): " + labsCount.ToString();
@@ -47,6 +48,23 @@ public class DecisionManager : MonoBehaviour
         GameManager.instance.state.currentDynasty = newDynasty;
         GameManager.instance.state.allDynasties.Add(newDynasty);
 
+        //Set up perks
+        foreach(PerkChoice choice in perkChoices){
+            choice.Toggle();
+        }
+        perkChoices.Clear();
+
         //Hide self and tell map to start
+    }
+
+    public void TogglePerk(PerkChoice choice){
+        if(choice.status){
+            choice.Toggle();
+            perkChoices.Remove(choice);
+        }
+        else if(perkChoices.Count < labsCount){
+            choice.Toggle();
+            perkChoices.Add(choice);
+        }
     }
 }
