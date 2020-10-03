@@ -10,9 +10,12 @@ public class MapManager : MonoBehaviour {
     [SerializeField] int m_ColCount;
     [SerializeField] int m_TileSize;
     [SerializeField] Vector3 m_MapCenter;
+    [SerializeField]
+
 
     // Tile map
     TileController[,] m_TileMap;
+    Hashtable m_FactionHashtable = new Hashtable();
 
     void Start() {
         InitalizeMap();
