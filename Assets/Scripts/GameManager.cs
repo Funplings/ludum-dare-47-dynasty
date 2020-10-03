@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
 
-    public GameState state = null;
+    public GameState state = new GameState();
 
     private void Awake(){
         if(instance == null){
