@@ -122,3 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0b28084c2dfbd49a103ce515bed540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_NoFactionSprite: {fileID: 21300000, guid: b4e9484b0737ea745a4f0ee98425e159, type: 3}
+  m_PlayerFactionSprite: {fileID: 21300000, guid: 049695e3f33a0e2428cddfd714761f14,
+    type: 3}
+  m_EnemyFactionSprites:
+  - {fileID: 21300000, guid: 8b5d801ed91eb8143a4fe991234318b1, type: 3}

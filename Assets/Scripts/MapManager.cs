@@ -10,14 +10,15 @@ public class MapManager : MonoBehaviour {
     [SerializeField] int m_ColCount;
     [SerializeField] int m_TileSize;
     [SerializeField] Vector3 m_MapCenter;
-    [SerializeField]
-
+    [SerializeField] int m_NumEnemyFactions;
 
     // Tile map
     TileController[,] m_TileMap;
-    Hashtable m_FactionHashtable = new Hashtable();
+    Dictionary<int, List<(int, int)>> m_FactionTiles; //  Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
+    System.Random m_Random;
 
     void Start() {
+        m_Random = new System.Random();
         InitalizeMap();
     }
 
@@ -25,6 +26,13 @@ public class MapManager : MonoBehaviour {
     void InitalizeMap() {
         // Instantiate tile map
         m_TileMap = new TileController[m_RowCount, m_ColCount];
+
+        // Instantiate faction hash table
+        m_FactionTiles = new Dictionary<int, List<(int, int)>>();
+        m_FactionTiles.Add(-1, new List<(int, int)>());
+        for (int i = 0; i < m_NumEnemyFactions; i++) {
+            m_FactionTiles.Add(i, new List<(int, int)>());
+        }
 
         // Calculate bottom right starting corner
         Vector3 bottomRight = m_MapCenter;
@@ -42,5 +50,28 @@ public class MapManager : MonoBehaviour {
                 m_TileMap[x, y].SetAttributes(x, y, 0);
             }
         }
+
+        // Instantiate player faction
+        (int, int) playerFactionPosition = (m_Random.Next(m_RowCount), m_Random.Next(m_ColCount));
+        SetTileFaction(playerFactionPosition, -1);
+
+        // Instantiate enemy factions
+        for (int i = 0; i < m_NumEnemyFactions; i++) {
+            bool instantiated = false;
+            while (!instantiated) {
+                (int, int) pos = (m_Random.Next(m_RowCount), m_Random.Next(m_ColCount));
+                if (m_TileMap[pos.Item1, pos.Item2].GetFaction() == -2) {
+                    SetTileFaction(pos, i);
+                    instantiated = true;
+                }
+            }
+        }
+
+
+    }
+
+    void SetTileFaction((int, int) position, int faction) {
+        m_TileMap[position.Item1, position.Item2].SetFaction(faction);
+        m_FactionTiles[faction].Add(position);
     }
 }
