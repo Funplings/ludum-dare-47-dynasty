@@ -62,11 +62,13 @@ public class EmpireControl : MonoBehaviour
         if(controlType == CONTROL_TYPE.FEED){
             state.m_Food -= TotalCost();
             state.m_Happiness += Constants.STARVING_HAPPINESS * complement + Constants.FED_HAPPINESS * count;
+            
         }
         else{
             state.m_Money -= TotalCost();
-            state.m_Happiness += Constants.UNINVESTED_HAPPINESS * complement + Constants.INVESTED_HAPPINESS * count;
+            state.m_Happiness +=  Constants.UNINVESTED_HAPPINESS * complement + Constants.INVESTED_HAPPINESS * count;
         }
+        state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
         count = 0;
         UpdateText();
     }
