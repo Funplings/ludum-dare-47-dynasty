@@ -50,8 +50,6 @@ public class MainMenu : MonoBehaviour
     public void PlayGame() {
         GameManager.instance.LoadGame();
         _colorSelected = image.color;
-        Debug.Log(_colorSelected);
-        Debug.Log(_nationName);
     }
     
     public void PlayTutorial()
