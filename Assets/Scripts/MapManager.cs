@@ -14,7 +14,7 @@ public class MapManager : MonoBehaviour {
 
     // Tile map
     TileController[,] m_TileMap;
-    Dictionary<int, List<(int, int)>> m_FactionTiles; //  Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
+    Dictionary<int, List<(int, int)>> m_FactionTiles; // Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
     System.Random m_Random;
 
     void Start() {
@@ -29,7 +29,7 @@ public class MapManager : MonoBehaviour {
 
         // Instantiate faction hash table
         m_FactionTiles = new Dictionary<int, List<(int, int)>>();
-        m_FactionTiles.Add(-1, new List<(int, int)>());
+        m_FactionTiles.Add(Constants.PLAYER_FACTION_INDEX, new List<(int, int)>());
         for (int i = 0; i < m_NumEnemyFactions; i++) {
             m_FactionTiles.Add(i, new List<(int, int)>());
         }
@@ -53,25 +53,27 @@ public class MapManager : MonoBehaviour {
 
         // Instantiate player faction
         (int, int) playerFactionPosition = (m_Random.Next(m_RowCount), m_Random.Next(m_ColCount));
-        SetTileFaction(playerFactionPosition, -1);
+        SetTileFaction(playerFactionPosition, Constants.PLAYER_FACTION_INDEX);
 
         // Instantiate enemy factions
         for (int i = 0; i < m_NumEnemyFactions; i++) {
             bool instantiated = false;
             while (!instantiated) {
                 (int, int) pos = (m_Random.Next(m_RowCount), m_Random.Next(m_ColCount));
-                if (m_TileMap[pos.Item1, pos.Item2].GetFaction() == -2) {
+                if (m_TileMap[pos.Item1, pos.Item2].GetFaction() == Constants.NO_FACTION_INDEX) {
                     SetTileFaction(pos, i);
                     instantiated = true;
                 }
             }
         }
-
-
     }
 
     void SetTileFaction((int, int) position, int faction) {
         m_TileMap[position.Item1, position.Item2].SetFaction(faction);
         m_FactionTiles[faction].Add(position);
+    }
+
+    private void OnMouseDown() {
+        
     }
 }

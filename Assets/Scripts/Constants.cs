@@ -9,4 +9,6 @@ public static class Constants {
     public const int INVEST_COST = 3;
     public const int STARTING_MONEY = 3;
     public const int GRID_SIZE = 4;
+    public const int PLAYER_FACTION_INDEX = -1;
+    public const int NO_FACTION_INDEX = -2;
 }
