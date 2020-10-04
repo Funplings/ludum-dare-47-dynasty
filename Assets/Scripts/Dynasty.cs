@@ -12,4 +12,12 @@ public class Dynasty {
         this.turnStarted = turnStarted;
         this.turnEnded = turnEnded;
     }
+    public string GetName()
+    {
+        return this.name;
+    }
+    public int GetDuration()
+    {
+        return this.turnEnded - this.turnStarted;
+    }
 }
