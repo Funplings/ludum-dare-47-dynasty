@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileController: MonoBehaviour
 {
+    static GameObject m_TilePopup;
+    static TileController m_CurrSelectedTile;
+
     [SerializeField] Sprite m_NoFactionSprite;
     [SerializeField] Sprite m_PlayerFactionSprite;
     [SerializeField] Sprite[] m_EnemyFactionSprites;
+    [SerializeField] GameObject m_TilePopupPrefab;
+
     int m_XIndex;
     int m_YIndex;
     int m_TileType; // 0 = None, 1 = Farm, 2 = Lab, 3 = Mine
@@ -23,12 +29,12 @@ public class TileController: MonoBehaviour
         m_XIndex = xIndex;
         m_YIndex = yIndex;
         m_TileType = tileType;
-        SetFaction(-2);
+        SetFaction(Constants.NO_FACTION_INDEX);
     }
 
     public void SetFaction(int faction) {
         // Error checking: setting an invalid faction index
-        if (faction < -2 || faction >= m_EnemyFactionSprites.Length) {
+        if (faction < Constants.NO_FACTION_INDEX || faction >= m_EnemyFactionSprites.Length) {
             print(string.Format("CANNOT SET TILE AS FACTION {0}", faction));
         }
 
@@ -36,9 +42,9 @@ public class TileController: MonoBehaviour
         m_Faction = faction;
 
         // Set tile sprite
-        if (faction == -2) {
+        if (faction == Constants.NO_FACTION_INDEX) {
             m_SpriteRenderer.sprite = m_NoFactionSprite;
-        } else if (faction == -1) {
+        } else if (faction == Constants.PLAYER_FACTION_INDEX) {
             m_SpriteRenderer.sprite = m_PlayerFactionSprite;
         } else {
             m_SpriteRenderer.sprite = m_EnemyFactionSprites[faction];
@@ -50,6 +56,28 @@ public class TileController: MonoBehaviour
     }
 
     void OnMouseDown() {
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            return;
+        }
+
+        // Debug logging
         print(string.Format("Clicked tile [{0}, {1}] of faction {2}", m_XIndex, m_YIndex, m_Faction));
+
+        // If this is a player tile, create tile popup (or destroy it, if already selected)
+        if (m_Faction == Constants.PLAYER_FACTION_INDEX) {
+            if (m_CurrSelectedTile == this) {
+                print("Deselected this tile");
+                m_CurrSelectedTile = null;
+                Destroy(m_TilePopup);
+                m_TilePopup = null;
+            }
+            else {
+                print("Selected new tile");
+                Destroy(m_TilePopup);
+                m_CurrSelectedTile = this;
+                m_TilePopup = Instantiate(m_TilePopupPrefab, FindObjectOfType<Canvas>().transform);
+                m_TilePopup.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+            }
+        }
     }
 }

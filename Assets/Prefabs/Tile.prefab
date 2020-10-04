@@ -127,3 +127,5 @@ MonoBehaviour:
     type: 3}
   m_EnemyFactionSprites:
   - {fileID: 21300000, guid: 8b5d801ed91eb8143a4fe991234318b1, type: 3}
+  m_TilePopupPrefab: {fileID: 7208263480356824348, guid: 9820ffc83a77596469c062f2c55312e8,
+    type: 3}
