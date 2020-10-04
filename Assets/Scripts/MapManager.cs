@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour {
     Dictionary<int, List<(int, int)>> m_FactionTiles; // Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
     System.Random m_Random;
 
-    void Start() {
+    void Awake() {
         m_StaticPopupCanvas = m_PopupCanvas;
         m_Random = new System.Random();
         InitalizeMap();
@@ -54,7 +54,7 @@ public class MapManager : MonoBehaviour {
                 tilePosition.y += m_TileSize * y;
                 GameObject tile = Instantiate(m_TilePrefab, tilePosition, Quaternion.identity, transform);
                 m_TileMap[x, y] = tile.GetComponent<TileController>();
-                m_TileMap[x, y].SetAttributes(x, y, 0);
+                m_TileMap[x, y].SetAttributes(x, y, TileController.TileType.NONE);
             }
         }
 
@@ -95,20 +95,39 @@ public class MapManager : MonoBehaviour {
     }
 
     public int LabsCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.LAB){
+                count++;
+            }
+        }
+        return count;
     }
 
     public int FarmsCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.FARM){
+                count++;
+            }
+        }
+        return count;
     }
 
     public int TerritoryCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX){
+                count++;
+            }
+        }
+        return count;
     }
 
     private void OnMouseDown() {
         
     }
+
 
     #region Buying
 

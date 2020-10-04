@@ -464,7 +464,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4775290010696717671}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 52101383804278307}
+        m_TargetAssemblyTypeName: EmpireControl, Assembly-CSharp
+        m_MethodName: Plus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &433515727887706455
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -934,7 +946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -963,7 +975,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4703851469459325906}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 52101383804278307}
+        m_TargetAssemblyTypeName: EmpireControl, Assembly-CSharp
+        m_MethodName: Minus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1857589605892897603
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1053,6 +1077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d217a367dad8642bd5390850ab076a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controlType: 0
   counterText: {fileID: 3641670770812221142}
   resultText: {fileID: 1793951516312723140}
   overColor: {r: 0.6792453, g: 0, b: 0, a: 1}

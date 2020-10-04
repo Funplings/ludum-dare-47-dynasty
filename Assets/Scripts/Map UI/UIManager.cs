@@ -39,6 +39,9 @@ public class UIManager : MonoBehaviour
         UpdateMoneyCount();
         UpdateFoodCount();
         UpdateSoldiersCount();
+        UpdateTerritoryCount();
+        UpdateFarmCount();
+        UpdateLabCount();
     }
     
 
@@ -54,10 +57,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdateMoneyCount() {
         m_MoneyInfo.UpdateCount(GameManager.instance.state.m_Money);
+        m_investControl.UpdateText();
     }
 
     public void UpdateFoodCount() {
         m_FoodInfo.UpdateCount(GameManager.instance.state.m_Food);
+        m_feedControl.UpdateText();
     }
 
     public void UpdateSoldiersCount() {
@@ -87,7 +92,13 @@ public class UIManager : MonoBehaviour
     }
 
     public void PlayRound(){
-        StartRebellion();
+        if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
+            m_feedControl.Pay();
+            m_investControl.Pay();
+            UpdateFoodCount();
+            UpdateMoneyCount();
+            UpdateHappinessCount();
+        }
     }
 
     public void StartRebellion(){
