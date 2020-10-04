@@ -5,12 +5,17 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    public static Color selected;
+    
     void Start()
     {
         
     }
     
-    void PlayGame() {
+    
+    
+    public void PlayGame() {
         GameManager.instance.LoadGame();
     }
     
