@@ -120,5 +120,46 @@ public class MapManager : MonoBehaviour {
             TileController.SetMode(Constants.ABANDONING_MODE);
         }
     }
+
+    #endregion
+
+    #region Buying
+
+    public void Buy(Constants.ON_SALE item, int cost){
+        GameState state = GameManager.instance.state;
+
+        if(item == Constants.ON_SALE.PLACE_SOLDIER){
+            if( cost > state.m_Soldiers) return;
+
+            state.m_Soldiers -= cost;
+            uiManager.UpdateSoldiersCount();
+
+            print("Placed a soldier!");
+            return;
+        }
+
+        if( cost > state.m_Money ) return;
+
+        state.m_Money -= cost;
+        uiManager.UpdateMoneyCount();
+
+        switch(item){
+            case Constants.ON_SALE.FOOD:
+                state.m_Food++;
+                uiManager.UpdateFoodCount();
+                break;
+            case Constants.ON_SALE.SOLDIER:
+                state.m_Soldiers++;
+                uiManager.UpdateSoldiersCount();
+                break;
+            case Constants.ON_SALE.FARM:
+                print("Bought farm!");
+                break;
+            case Constants.ON_SALE.LAB:
+                print("Bought Lab!");
+                break;
+        }
+    }
+
     #endregion
 }
