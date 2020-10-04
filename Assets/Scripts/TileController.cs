@@ -79,7 +79,7 @@ public class TileController: MonoBehaviour
                 m_TilePopup.transform.position = Camera.main.WorldToScreenPoint(transform.position);
 
                 // If this tile is on the top half of the screen, display below; otherwise, display above
-                if (m_YIndex > Constants.NUM_ROWS / 2) {
+                if (m_YIndex >= Constants.NUM_ROWS / 2) {
                     m_TilePopup.transform.position = Camera.main.WorldToScreenPoint(transform.position - new Vector3(0, 2f, 0));
                 } else {
                     m_TilePopup.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0));
