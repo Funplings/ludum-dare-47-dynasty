@@ -7,18 +7,43 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("UIs")]
+    [SerializeField] private GameObject mapUI;
+    [SerializeField] private GameObject rebellionUI;
+    
+    [Header("Info UI")]
     [SerializeField] private CurrencyInfo m_HappinessInfo;
     [SerializeField] private CurrencyInfo m_MoneyInfo;
     [SerializeField] private CurrencyInfo m_FoodInfo;
     [SerializeField] private CurrencyInfo m_SoldiersInfo;
+
+    [Header("Map UI")]
+    [SerializeField] private TMP_Text m_DynastyText;
     [SerializeField] private TMP_Text m_TerritoryText;
     [SerializeField] private TMP_Text m_FarmText;
     [SerializeField] private TMP_Text m_LabText;
-    [SerializeField] private EmpireControl feedControl;
-    [SerializeField] private EmpireControl investControl;
-    [SerializeField] private RebellionManager rebellion;
-    [SerializeField] private TMP_Text alertText;
+    [SerializeField] private EmpireControl m_feedControl;
+    [SerializeField] private EmpireControl m_investControl;
+    [SerializeField] private TMP_Text m_alertText;
+
+    [Header("Map Manager")]
+    [SerializeField] private MapManager mapManager;
+
+    private RebellionManager m_rebellion;
+    private Animator animator;
+
+    void Start(){
+        animator = GetComponent<Animator>();
+        m_rebellion = GetComponent<RebellionManager>();
+    }
     
+
+    #region Map UI
+
+    public void UpdateDynasty(){
+        m_DynastyText.text = string.Format("<b>The <i>{0}</i> Dynasty<b>", GameManager.instance.state.m_currentDynasty.name);
+    }
+
     public void UpdateHappinessCount(int happiness) {
         m_HappinessInfo.UpdateCount(happiness);
     }
@@ -47,20 +72,42 @@ public class UIManager : MonoBehaviour
         m_LabText.text = string.Format("Labs Owned: {0}", labs);
     }
     
-    public void Hide(){
-        gameObject.SetActive(false);
+    #endregion Map UI
+    
+    public void ShowMapUI(bool state){
+        mapUI.SetActive(state);
+    }
+
+    public void ShowRebellionUI(bool state){
+        rebellionUI.SetActive(state);
     }
 
     public void PlayRound(){
-        Alert("Pizza");
-        // rebellion.StartFade();
+        // Alert("Pizza");
+        StartRebellion();
+    }
+
+    public void StartRebellion(){
+        animator.SetTrigger("rebellion");
+    }
+
+    //Animation Event
+    public void SwitchToRebellion(){
+        ShowMapUI(false);
+        ShowRebellionUI(true);
+    }
+
+    public void EndRebellion(){
+        //check for territories, if not satisfied return
+        ShowRebellionUI(false);
+        mapManager.EndDynasty();
     }
 
     public void Alert(string alert){
-        alertText.text = alert;
-        alertText.DOComplete();
-        alertText.transform.DOComplete();
-        alertText.DOFade(1, .5f).OnComplete(() => alertText.DOFade(0, .5f));
-        alertText.rectTransform.DOAnchorPosY(100, 1).OnComplete(() => alertText.rectTransform.anchoredPosition = Vector2.zero);
+        m_alertText.text = alert;
+        m_alertText.DOComplete();
+        m_alertText.transform.DOComplete();
+        m_alertText.DOFade(1, .5f).OnComplete(() => m_alertText.DOFade(0, .5f));
+        m_alertText.rectTransform.DOAnchorPosY(100, 1).OnComplete(() => m_alertText.rectTransform.anchoredPosition = Vector2.zero);
     }
 }

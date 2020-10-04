@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Dynasty {
-    string name;
-    int turnStarted; 
-    int turnEnded;
+    public string name;
+    public int turnStarted; 
+    public int turnEnded;
 
     public Dynasty(string name, int turnStarted, int turnEnded)
     {

@@ -49,3 +49,4 @@ MonoBehaviour:
   m_MapCenter: {x: -3.887, y: 0, z: 0}
   m_NumEnemyFactions: 0
   m_PopupCanvas: {fileID: 0}
+  uiManager: {fileID: 0}
