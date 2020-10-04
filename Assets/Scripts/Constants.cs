@@ -13,6 +13,7 @@ public static class Constants {
     public const int NO_FACTION_INDEX = -2;
     public const int NUM_ROWS = 10;
     public const int NUM_COLS = 10;
+    public const int REBELLION_TILE_LOSS = 2;
 
     #region Perks
 
@@ -28,4 +29,11 @@ public static class Constants {
     public const float PERK_SOLDIER_EFFICIENCY = 1.5f; // base should be 1, so no variable
 
     #endregion Perks
+
+    #region TileController Modes
+    public const int DEFAULT_MODE = 0;
+    public const int SELECTING_MODE = 1;
+    public const int EXPANDING_MODE = 2;
+    public const int ABANDONING_MODE = 3;
+    #endregion
 }
