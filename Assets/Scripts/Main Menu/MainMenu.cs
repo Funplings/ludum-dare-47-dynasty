@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -14,9 +15,11 @@ public class MainMenu : MonoBehaviour
     public float b;
 
     private Color _colorSelected;
+    private string _nationName;
     [SerializeField] private Image image;
     [SerializeField] private Button play;
     [SerializeField] private Button tutorial;
+    [SerializeField] private TMP_InputField input;
 
     void Start()
     {
@@ -26,6 +29,7 @@ public class MainMenu : MonoBehaviour
         image.color = new Color(r, g, b);
         play.transform.localPosition = new Vector3(225, -100, 0);
         tutorial.transform.localPosition = new Vector3(200, -30, 0);
+        input.onEndEdit.AddListener(SubmitName);
     }
 
     void Update()
@@ -45,13 +49,22 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame() {
         GameManager.instance.LoadGame();
+        _colorSelected = image.color;
+        Debug.Log(_colorSelected);
+        Debug.Log(_nationName);
     }
-
+    
     public void PlayTutorial()
     {
         GameManager.instance.LoadTutorial();
+        _colorSelected = image.color;
     }
 
+    private void SubmitName(string text)
+    {
+        _nationName = text;
+    }
+    
     public void sliderCallbackR(float value)
     {
         r = value;
