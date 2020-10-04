@@ -8,8 +8,8 @@ public class RebellionManager : MonoBehaviour
     [SerializeField] private TMP_Text FoodCount;
     [SerializeField] private TMP_Text SoldierCount;
     [SerializeField] private TMP_Text TerritoryCount;
-    [SerializeField] private GameObject UI;
-    [SerializeField] private UIManager mapCanvas;
+    [SerializeField] private GameObject rebellionUI;
+    [SerializeField] private UIManager mapUI;
 
     private Animator animator;
     
@@ -29,8 +29,8 @@ public class RebellionManager : MonoBehaviour
     }
 
     public void FadeSwitch(){
-        UI.SetActive(true);
-        mapCanvas.Hide();
+        rebellionUI.SetActive(true);
+        mapUI.Hide();
 
     }
 }

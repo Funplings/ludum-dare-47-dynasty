@@ -75,15 +75,15 @@ public class TileController: MonoBehaviour
                 print("Selected new tile");
                 Destroy(m_TilePopup);
                 m_CurrSelectedTile = this;
-                m_TilePopup = Instantiate(m_TilePopupPrefab, FindObjectOfType<Canvas>().transform);
-                m_TilePopup.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+                m_TilePopup = Instantiate(m_TilePopupPrefab, MapManager.m_StaticPopupCanvas.transform);
 
                 // If this tile is on the top half of the screen, display below; otherwise, display above
                 if (m_YIndex >= Constants.NUM_ROWS / 2) {
-                    m_TilePopup.transform.position = Camera.main.WorldToScreenPoint(transform.position - new Vector3(0, 2f, 0));
+                    m_TilePopup.transform.position = transform.position - new Vector3(0, 2f, 0);
                 } else {
-                    m_TilePopup.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0));
+                    m_TilePopup.transform.position = transform.position + new Vector3(0, 2f, 0);
                 }
+                
             }
         }
     }
