@@ -1053,7 +1053,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d217a367dad8642bd5390850ab076a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterText: {fileID: 0}
+  counterText: {fileID: 3641670770812221142}
+  resultText: {fileID: 1793951516312723140}
+  overColor: {r: 0.6792453, g: 0, b: 0, a: 1}
 --- !u!1 &8925183663827470514
 GameObject:
   m_ObjectHideFlags: 0
