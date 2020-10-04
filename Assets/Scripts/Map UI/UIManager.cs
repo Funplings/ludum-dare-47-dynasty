@@ -100,6 +100,8 @@ public class UIManager : MonoBehaviour
             UpdateMoneyCount();
             UpdateHappinessCount();
 
+            TileController.ExpandTiles();
+
             if(GameManager.instance.state.m_Happiness == 0){
                 StartRebellion();
             }
@@ -123,6 +125,11 @@ public class UIManager : MonoBehaviour
 
     public void EndRebellion(){
         //check for territories, if not satisfied return
+        if (TileController.GetAbandonedTilesCount() < Constants.REBELLION_TILE_LOSS) {
+            return;
+        }
+        TileController.AbandonTiles();
+        TileController.SetMode(Constants.DEFAULT_MODE);
         ShowRebellionUI(false);
         m_MapManager.EndDynasty();
     }

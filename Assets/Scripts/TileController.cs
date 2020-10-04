@@ -20,6 +20,7 @@ public class TileController: MonoBehaviour
     static int m_Mode;
     static List<TileController> m_ExpansionOptions = new List<TileController>();
     static List<TileController> m_AbandonedTiles = new List<TileController>();
+    static List<TileController> m_ExpandingTiles = new List<TileController>();
 
     // Faction colors
     static Color m_NoFactionColor = new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f);
@@ -109,7 +110,7 @@ public class TileController: MonoBehaviour
         switch (m_Mode) {
             case Constants.DEFAULT_MODE:
             // If this is a player tile, create tile popup
-            if (m_Faction == Constants.PLAYER_FACTION_INDEX || true) {
+            if (m_Faction == Constants.PLAYER_FACTION_INDEX) {
                 CreateTilePopup();
 
                 m_Mode = Constants.SELECTING_MODE;
@@ -125,7 +126,7 @@ public class TileController: MonoBehaviour
                 m_Mode = Constants.DEFAULT_MODE;
             }
             // If this is a player tile, deselect the previously selected tile and create tile popup
-            else if (m_Faction == Constants.PLAYER_FACTION_INDEX || true) {
+            else if (m_Faction == Constants.PLAYER_FACTION_INDEX) {
                 ClearTilePopup();
                 ClearSelectedTile();
 
@@ -143,10 +144,15 @@ public class TileController: MonoBehaviour
             break;
 
             case Constants.EXPANDING_MODE:
+            bool expanded = false;
+
             // If this is an expandable tile, choose this tile to expand to
             if (m_ExpansionOptions.Contains(this)) {
+                // Handle expansion state for this tile and and the tile that will expand to it
+                expanded = true;
                 m_WillExpand = true;
                 m_CurrSelectedTile.m_ExpandTarget = this;
+                m_ExpandingTiles.Add(m_CurrSelectedTile);
 
                 // Create arrow
                 GameObject arrow = Instantiate(m_ExpandArrowPrefab, m_CurrSelectedTile.transform);
@@ -170,16 +176,31 @@ public class TileController: MonoBehaviour
                 }
             }
 
+            // Clear all expansion options
             while (m_ExpansionOptions.Count > 0) {
                 m_ExpansionOptions[0].ClearExpansionOption();
             }
 
+            // / But keep if this tile was expanded too, keep the cover
+            if (expanded) {
+                m_ExpansionIcon = Instantiate(m_ExpansionIcon, transform);
+            }
+
+            // Clear the selected tile
             ClearSelectedTile();
 
+            // Return the mode to default
             m_Mode = Constants.DEFAULT_MODE;
+
             break;
 
             case Constants.ABANDONING_MODE:
+            // Cannot lose a non-player faction tile
+            if (m_Faction != Constants.PLAYER_FACTION_INDEX) {
+                break;
+            }
+
+            // Handle tile abandoning
             if (!m_AbandonedTiles.Contains(this)) {
                 if (m_AbandonedTiles.Count < Constants.REBELLION_TILE_LOSS) {
                     m_AbandonedTiles.Add(this);
@@ -245,9 +266,20 @@ public class TileController: MonoBehaviour
     #endregion
 
     #region Expansion
+    public static void ExpandTiles() {
+        while (m_ExpandingTiles.Count > 0) {
+            TileController tile = m_ExpandingTiles[0];
+            tile.m_ExpandTarget.SetFaction(Constants.PLAYER_FACTION_INDEX);
+            tile.CancelExpansion();
+        }
+    }
+
     public void SetExpansionOption() {
         // Put expansion cover over self
         m_ExpansionIcon = Instantiate(m_ExpansionIconPrefab, transform);
+
+        // Expansion cover should be a semi-transparent version of the player faction color
+        m_ExpansionIcon.GetComponent<SpriteRenderer>().color = new Color(m_PlayerColor.r, m_PlayerColor.g, m_PlayerColor.b, 0.5f);
 
         // Add self to expansion options list
         m_ExpansionOptions.Add(this);
@@ -308,10 +340,13 @@ public class TileController: MonoBehaviour
 
     public void CancelExpansion() {
         // Cancel expansion
+        Destroy(m_ExpandTarget.m_ExpansionIcon);
+        m_ExpandTarget.m_ExpansionIcon = null;
         m_ExpandTarget.m_WillExpand = false;
         m_ExpandTarget = null;
         Destroy(m_ExpandArrow);
         m_ExpandArrow = null;
+        m_ExpandingTiles.Remove(this);
 
         // Clear the tile popup
         ClearTilePopup();
@@ -325,6 +360,22 @@ public class TileController: MonoBehaviour
     #endregion
 
     #region Abandoning
+    public static void AbandonTiles() {
+        while (m_AbandonedTiles.Count > 0) {
+            TileController tile = m_AbandonedTiles[0];
+            tile.SetFaction(Constants.NO_FACTION_INDEX);
+            tile.FinishAbandoning();
+        }
+    }
 
+    void FinishAbandoning() {
+        Destroy(m_AbandonMarker);
+        m_AbandonMarker = null;
+        m_AbandonedTiles.Remove(this);
+    }
+
+    public static int GetAbandonedTilesCount() {
+        return m_AbandonedTiles.Count;
+    }
     #endregion
 }
