@@ -11,11 +11,6 @@ public class TilePopup : MonoBehaviour {
     [SerializeField] Text m_ExpandText;
     TileController m_Tile;
 
-
-    void Awake() {
-        m_ExpandButton.onClick.AddListener(Expand);
-    }
-
     public void SetTile(TileController tile) {
         m_Tile = tile;
         if (m_Tile.m_ExpandTarget == null) {

@@ -5,31 +5,30 @@ using UnityEngine.EventSystems;
 
 public class TileController: MonoBehaviour
 {
-    #region Static variables
-
+    #region Enums
     public enum TileType {
         NONE,
         FARM,
         LAB,
         MINE
     }
+    #endregion
 
-    // Constants
-    const int DEFAULT_MODE = 0;
-    const int SELECTING_MODE = 1;
-    const int EXPANDING_MODE = 2;
-
+    #region Static variables
     static GameObject m_TilePopup;
     static TileController m_CurrSelectedTile;
     static int m_Mode;
     static List<TileController> m_ExpansionOptions = new List<TileController>();
     static List<TileController> m_AbandonedTiles = new List<TileController>();
-    #endregion
 
-    #region Sprites
-    [SerializeField] Sprite m_NoFactionSprite;
-    [SerializeField] Sprite m_PlayerFactionSprite;
-    [SerializeField] Sprite[] m_EnemyFactionSprites;
+    // Faction colors
+    static Color m_NoFactionColor = new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f);
+    static Color m_PlayerColor = new Color(0.8301887f, 0.3217136f, 0.1762193f, 1f); // Can remove once custom player color is implemented
+    static Color[] m_EnemyFactionColors = {
+        new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f),
+        new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f),
+        new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f)
+    };
     #endregion
 
     #region Prefab variables
@@ -74,7 +73,7 @@ public class TileController: MonoBehaviour
 
     public void SetFaction(int faction) {
         // Error checking: setting an invalid faction index
-        if (faction < Constants.NO_FACTION_INDEX || faction >= m_EnemyFactionSprites.Length) {
+        if (faction < Constants.NO_FACTION_INDEX || faction >= m_EnemyFactionColors.Length) {
             print(string.Format("CANNOT SET TILE AS FACTION {0}", faction));
         }
 
@@ -83,11 +82,11 @@ public class TileController: MonoBehaviour
 
         // Set tile sprite
         if (faction == Constants.NO_FACTION_INDEX) {
-            m_SpriteRenderer.sprite = m_NoFactionSprite;
+            m_SpriteRenderer.color = m_NoFactionColor;
         } else if (faction == Constants.PLAYER_FACTION_INDEX) {
-            m_SpriteRenderer.sprite = m_PlayerFactionSprite;
+            m_SpriteRenderer.color = m_PlayerColor;
         } else {
-            m_SpriteRenderer.sprite = m_EnemyFactionSprites[faction];
+            m_SpriteRenderer.color = m_EnemyFactionColors[faction];
         }
     }
 
@@ -255,6 +254,8 @@ public class TileController: MonoBehaviour
     }
 
     public void ClearExpansionOption() {
+        print(m_ExpansionIcon);
+
         // Remove expansion cover
         Destroy(m_ExpansionIcon);
 
