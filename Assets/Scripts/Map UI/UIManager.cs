@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text m_alertText;
 
     [Header("Map Manager")]
-    [SerializeField] private MapManager mapManager;
+    [SerializeField] private MapManager m_MapManager;
 
     private RebellionManager m_rebellion;
     private Animator animator;
@@ -95,12 +95,13 @@ public class UIManager : MonoBehaviour
     public void SwitchToRebellion(){
         ShowMapUI(false);
         ShowRebellionUI(true);
+        m_MapManager.SetRebelling(true);
     }
 
     public void EndRebellion(){
         //check for territories, if not satisfied return
         ShowRebellionUI(false);
-        mapManager.EndDynasty();
+        m_MapManager.EndDynasty();
     }
 
     public void Alert(string alert){

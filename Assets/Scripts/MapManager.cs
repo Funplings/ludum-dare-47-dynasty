@@ -21,6 +21,8 @@ public class MapManager : MonoBehaviour {
     Dictionary<int, List<(int, int)>> m_FactionTiles; // Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
     System.Random m_Random;
 
+    bool m_Rebelling = false;
+
     void Start() {
         m_StaticPopupCanvas = m_PopupCanvas;
         m_Random = new System.Random();
@@ -94,6 +96,7 @@ public class MapManager : MonoBehaviour {
         decisionManager.SetupDecision();
     }
 
+    #region Getters and Setters
     public int LabsCount(){
         return 0;
     }
@@ -106,7 +109,16 @@ public class MapManager : MonoBehaviour {
         return 0;
     }
 
-    private void OnMouseDown() {
-        
+    public bool GetRebelling() {
+        return m_Rebelling;
     }
+
+    public void SetRebelling(bool rebelling) {
+        m_Rebelling = rebelling;
+
+        if (rebelling == true) {
+            TileController.SetMode(Constants.ABANDONING_MODE);
+        }
+    }
+    #endregion
 }

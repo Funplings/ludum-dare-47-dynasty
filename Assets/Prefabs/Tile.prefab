@@ -135,6 +135,11 @@ MonoBehaviour:
     type: 3}
   m_ExpandArrowPrefab: {fileID: 3408833415071506480, guid: 0e721c04024072c429a31c0ff44edfb0,
     type: 3}
+  m_AbandonMarkerPrefab: {fileID: 941985399990454704, guid: 13915ff487cd75c4fa73bf58d1e5b2b9,
+    type: 3}
+  m_WillExpand: 0
+  m_ExpandTarget: {fileID: 0}
   m_SelectCover: {fileID: 0}
   m_ExpansionIcon: {fileID: 0}
   m_ExpandArrow: {fileID: 0}
+  m_AbandonMarker: {fileID: 0}
