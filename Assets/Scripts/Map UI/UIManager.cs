@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLabCount() {
         m_LabText.text = string.Format("Labs Owned: {0}", m_MapManager.LabsCount());
+
     }
     
     #endregion Map UI

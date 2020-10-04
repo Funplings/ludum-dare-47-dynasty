@@ -28,6 +28,15 @@ public static class Constants {
 
     public const int INVEST_COST = 3; //Empire Control - Payment
 
+    #region Turn Variables
+    public const int STARVING_HAPPINESS = -10;
+    public const int FED_HAPPINESS = 3;
+    public const int INVESTED_HAPPINESS = 5;
+    public const int UNINVESTED_HAPPINESS = -1;
+    #endregion
+
+    public const int INVEST_COST = 3; //Empire Control - Payment
+
     #region Perks
 
     //Empire Control - Payment

@@ -23,7 +23,6 @@ public class MapManager : MonoBehaviour {
 
     bool m_Rebelling = false;
 
-
     void Awake() {
         m_StaticPopupCanvas = m_PopupCanvas;
         m_Random = new System.Random();
@@ -139,6 +138,7 @@ public class MapManager : MonoBehaviour {
         if (rebelling == true) {
             TileController.SetMode(Constants.ABANDONING_MODE);
         }
+
     }
 
     #endregion

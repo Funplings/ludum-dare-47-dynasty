@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class TileController: MonoBehaviour
 {
     #region Static variables
+
     public enum TileType {
         NONE,
         FARM,
@@ -43,7 +44,6 @@ public class TileController: MonoBehaviour
     // Position
     int m_XIndex;
     int m_YIndex;
-
     TileType m_TileType; // 0 = None, 1 = Farm, 2 = Lab, 3 = Mine
     int m_Faction; // -1 = Player faction; -2 = no faction
     public bool m_WillExpand;

@@ -34,5 +34,8 @@ public class TilePopup : MonoBehaviour {
 
     void CancelExpansion() {
         m_Tile.CancelExpansion();
+        if (!m_Tile.m_WillExpand) {
+            m_Tile.ExpandTile();
+        }
     }
 }
