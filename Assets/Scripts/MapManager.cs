@@ -90,7 +90,8 @@ public class MapManager : MonoBehaviour {
     }
 
     public void EndDynasty(){
-        //reset happiness to 50
+        GameManager.instance.state.m_Happiness = 50;
+        uiManager.UpdateHappinessCount();
         decisionManager.SetupDecision();
     }
 

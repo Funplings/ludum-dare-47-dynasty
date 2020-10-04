@@ -93,12 +93,21 @@ public class UIManager : MonoBehaviour
 
     public void PlayRound(){
         if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
+            print("ROUND");
             m_feedControl.Pay();
             m_investControl.Pay();
             UpdateFoodCount();
             UpdateMoneyCount();
             UpdateHappinessCount();
+
+            if(GameManager.instance.state.m_Happiness == 0){
+                StartRebellion();
+            }
+            else if(GameManager.instance.state.m_Happiness == 100){
+                print("YOU WIN!");
+            }
         }
+        
     }
 
     public void StartRebellion(){
