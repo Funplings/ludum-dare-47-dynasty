@@ -15,6 +15,10 @@ public class MainMenu : MonoBehaviour
 
     private Color _colorSelected;
     [SerializeField] private Image image;
+    [SerializeField] private Button play;
+    [SerializeField] private Button tutorial;
+
+    private float[] pos;
     
     void Start()
     {
@@ -27,6 +31,7 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         
+
     }
 
     public void PlayGame() {
