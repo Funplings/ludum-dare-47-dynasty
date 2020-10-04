@@ -409,6 +409,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: DecisionCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 971706761943793375, guid: 31190f411af3e54408e8b5e46a0e9265,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 971706761943793375, guid: 31190f411af3e54408e8b5e46a0e9265,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 971706761943793375, guid: 31190f411af3e54408e8b5e46a0e9265,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 1653480076240549822, guid: 31190f411af3e54408e8b5e46a0e9265,
         type: 3}
       propertyPath: m_AnchorMin.y
