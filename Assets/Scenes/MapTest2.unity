@@ -1908,10 +1908,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TilePrefab: {fileID: 8759372779479924416, guid: 00c7dcf580955554d926eb4928ad5285,
     type: 3}
-  m_RowCount: 10
-  m_ColCount: 10
   m_TileSize: 1
   m_MapCenter: {x: -3.86, y: 0, z: 0}
+  m_NumEnemyFactions: 0
 --- !u!4 &1517378052
 Transform:
   m_ObjectHideFlags: 0
@@ -2258,7 +2257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1767110749
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2807,6 +2806,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a9a4a30c54b794d81e52f7edc21332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterText: {fileID: 0}
-  count: 0
-  max: 0
