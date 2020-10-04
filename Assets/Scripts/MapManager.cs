@@ -11,6 +11,8 @@ public class MapManager : MonoBehaviour {
     [SerializeField] Vector3 m_MapCenter;
     [SerializeField] int m_NumEnemyFactions;
     [SerializeField] Canvas m_PopupCanvas;
+    [SerializeField] UIManager uiManager;
+    [SerializeField] DecisionManager decisionManager;
 
     public static Canvas m_StaticPopupCanvas = null;
 
@@ -24,6 +26,8 @@ public class MapManager : MonoBehaviour {
         m_Random = new System.Random();
         InitalizeMap();
     }
+
+    #region Tiles
 
     // Initalizes the Constants.NUM_ROWS x Constants.NUM_COLS tile map in the game.
     void InitalizeMap() {
@@ -48,7 +52,7 @@ public class MapManager : MonoBehaviour {
                 Vector3 tilePosition = bottomRight;
                 tilePosition.x += m_TileSize * x;
                 tilePosition.y += m_TileSize * y;
-                GameObject tile = Instantiate(m_TilePrefab, tilePosition, Quaternion.identity);
+                GameObject tile = Instantiate(m_TilePrefab, tilePosition, Quaternion.identity, transform);
                 m_TileMap[x, y] = tile.GetComponent<TileController>();
                 m_TileMap[x, y].SetAttributes(x, y, 0);
             }
@@ -74,6 +78,32 @@ public class MapManager : MonoBehaviour {
     void SetTileFaction((int, int) position, int faction) {
         m_TileMap[position.Item1, position.Item2].SetFaction(faction);
         m_FactionTiles[faction].Add(position);
+    }
+
+    
+
+    #endregion
+
+    public void StartDynasty(){
+        uiManager.UpdateDynasty();
+        uiManager.ShowMapUI(true);
+    }
+
+    public void EndDynasty(){
+        //reset happiness to 50
+        decisionManager.SetupDecision();
+    }
+
+    public int LabsCount(){
+        return 0;
+    }
+
+    public int FarmsCount(){
+        return 0;
+    }
+
+    public int TerritoryCount(){
+        return 0;
     }
 
     private void OnMouseDown() {
