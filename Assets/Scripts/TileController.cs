@@ -34,7 +34,7 @@ public class TileController: MonoBehaviour
     SpriteRenderer m_SpriteRenderer;
 
     public bool m_WillExpand;
-    public bool m_Expanding;
+    public TileController m_ExpandTarget;
 
     public void Awake() {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -119,7 +119,7 @@ public class TileController: MonoBehaviour
             // If this is an expandable tile, choose this tile to expand to
             if (m_ExpansionOptions.Contains(this)) {
                 m_WillExpand = true;
-                m_CurrSelectedTile.m_Expanding = true;
+                m_CurrSelectedTile.m_ExpandTarget = this;
 
                 // Create arrow
                 GameObject arrow = Instantiate(m_ExpandArrowPrefab, m_CurrSelectedTile.transform);
@@ -248,6 +248,23 @@ public class TileController: MonoBehaviour
                 rightTile.SetExpansionOption();
             }
         }
+    }
+
+    public void CancelExpansion() {
+        // Cancel expansion
+        m_ExpandTarget.m_WillExpand = false;
+        m_ExpandTarget = null;
+        Destroy(m_ExpandArrow);
+        m_ExpandArrow = null;
+
+        // Clear the tile popup
+        ClearTilePopup();
+
+        // Clear selection
+        ClearSelectedTile();
+
+        // Set mode
+        m_Mode = DEFAULT_MODE;
     }
     #endregion
 }
