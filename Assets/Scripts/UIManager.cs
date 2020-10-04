@@ -6,15 +6,16 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] CurrencyInfo m_HappinessInfo;
-    [SerializeField] CurrencyInfo m_MoneyInfo;
-    [SerializeField] CurrencyInfo m_FoodInfo;
-    [SerializeField] CurrencyInfo m_SoldiersInfo;
-    [SerializeField] TMP_Text m_TerritoryText;
-    [SerializeField] TMP_Text m_FarmText;
-    [SerializeField] TMP_Text m_LabText;
-    [SerializeField] EmpireControl feedControl;
-    [SerializeField] EmpireControl investControl;
+    [SerializeField] private CurrencyInfo m_HappinessInfo;
+    [SerializeField] private CurrencyInfo m_MoneyInfo;
+    [SerializeField] private CurrencyInfo m_FoodInfo;
+    [SerializeField] private CurrencyInfo m_SoldiersInfo;
+    [SerializeField] private TMP_Text m_TerritoryText;
+    [SerializeField] private TMP_Text m_FarmText;
+    [SerializeField] private TMP_Text m_LabText;
+    [SerializeField] private EmpireControl feedControl;
+    [SerializeField] private EmpireControl investControl;
+    [SerializeField] private RebellionManager rebellion;
     
     public void UpdateHappinessCount(int happiness) {
         m_HappinessInfo.UpdateCount(happiness);
@@ -44,4 +45,11 @@ public class UIManager : MonoBehaviour
         m_LabText.text = string.Format("Labs Owned: {0}", labs);
     }
     
+    public void Hide(){
+        gameObject.SetActive(false);
+    }
+
+    public void PlayRound(){
+        rebellion.StartFade();
+    }
 }
