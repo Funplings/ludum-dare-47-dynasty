@@ -6,9 +6,9 @@ using UnityEngine;
 public class ColorSelector : MonoBehaviour
 {
     
-    public void select()
-    {
-        MainMenu.selected = gameObject.GetComponent<Material>().color;
-    }
+    // public void select()
+    // {
+    //     MainMenu.selected = gameObject.GetComponent<Material>().color;
+    // }
 
 }
