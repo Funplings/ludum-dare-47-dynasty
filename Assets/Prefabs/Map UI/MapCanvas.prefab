@@ -730,7 +730,7 @@ MonoBehaviour:
   m_feedControl: {fileID: 2203963934988567915}
   m_investControl: {fileID: 2203963935768589309}
   m_alertText: {fileID: 8197406097570312791}
-  mapManager: {fileID: 0}
+  m_MapManager: {fileID: 0}
 --- !u!114 &549024559827285500
 MonoBehaviour:
   m_ObjectHideFlags: 0

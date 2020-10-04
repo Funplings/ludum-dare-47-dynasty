@@ -94,7 +94,6 @@ public class UIManager : MonoBehaviour
 
     public void PlayRound(){
         if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
-            print("ROUND");
             m_feedControl.Pay();
             m_investControl.Pay();
             UpdateFoodCount();
