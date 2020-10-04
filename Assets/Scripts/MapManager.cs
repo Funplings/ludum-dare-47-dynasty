@@ -23,7 +23,8 @@ public class MapManager : MonoBehaviour {
 
     bool m_Rebelling = false;
 
-    void Start() {
+
+    void Awake() {
         m_StaticPopupCanvas = m_PopupCanvas;
         m_Random = new System.Random();
         InitalizeMap();
@@ -56,7 +57,7 @@ public class MapManager : MonoBehaviour {
                 tilePosition.y += m_TileSize * y;
                 GameObject tile = Instantiate(m_TilePrefab, tilePosition, Quaternion.identity, transform);
                 m_TileMap[x, y] = tile.GetComponent<TileController>();
-                m_TileMap[x, y].SetAttributes(x, y, 0);
+                m_TileMap[x, y].SetAttributes(x, y, TileController.TileType.NONE);
             }
         }
 
@@ -98,15 +99,33 @@ public class MapManager : MonoBehaviour {
 
     #region Getters and Setters
     public int LabsCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.LAB){
+                count++;
+            }
+        }
+        return count;
     }
 
     public int FarmsCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.FARM){
+                count++;
+            }
+        }
+        return count;
     }
 
     public int TerritoryCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX){
+                count++;
+            }
+        }
+        return count;
     }
 
     public bool GetRebelling() {
@@ -122,6 +141,7 @@ public class MapManager : MonoBehaviour {
     }
 
     #endregion
+
 
     #region Buying
 
