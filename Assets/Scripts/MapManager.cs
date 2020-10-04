@@ -15,7 +15,7 @@ public class MapManager : MonoBehaviour {
     public static Canvas m_StaticPopupCanvas = null;
 
     // Tile map
-    TileController[,] m_TileMap;
+    public static TileController[,] m_TileMap;
     Dictionary<int, List<(int, int)>> m_FactionTiles; // Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
     System.Random m_Random;
 

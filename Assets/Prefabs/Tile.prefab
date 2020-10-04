@@ -131,4 +131,10 @@ MonoBehaviour:
     type: 3}
   m_SelectCoverPrefab: {fileID: 3131480187571663200, guid: f872c26e5b78cac4f91b96ad511732f7,
     type: 3}
+  m_ExpansionIconPrefab: {fileID: 533515895080975135, guid: e6292f641ca10a543997291ca30a2d76,
+    type: 3}
+  m_ExpandArrowPrefab: {fileID: 3408833415071506480, guid: 0e721c04024072c429a31c0ff44edfb0,
+    type: 3}
   m_SelectCover: {fileID: 0}
+  m_ExpansionIcon: {fileID: 0}
+  m_ExpandArrow: {fileID: 0}
