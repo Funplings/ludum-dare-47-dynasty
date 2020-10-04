@@ -6,8 +6,6 @@ public class MapManager : MonoBehaviour {
 
     // Serializable fields
     [SerializeField] GameObject m_TilePrefab;
-    [SerializeField] int m_RowCount;
-    [SerializeField] int m_ColCount;
     [SerializeField] int m_TileSize;
     [SerializeField] Vector3 m_MapCenter;
     [SerializeField] int m_NumEnemyFactions;
@@ -22,10 +20,10 @@ public class MapManager : MonoBehaviour {
         InitalizeMap();
     }
 
-    // Initalizes the m_RowCount x m_ColCount tile map in the game.
+    // Initalizes the Constants.NUM_ROWS x Constants.NUM_COLS tile map in the game.
     void InitalizeMap() {
         // Instantiate tile map
-        m_TileMap = new TileController[m_RowCount, m_ColCount];
+        m_TileMap = new TileController[Constants.NUM_ROWS, Constants.NUM_COLS];
 
         // Instantiate faction hash table
         m_FactionTiles = new Dictionary<int, List<(int, int)>>();
@@ -36,12 +34,12 @@ public class MapManager : MonoBehaviour {
 
         // Calculate bottom right starting corner
         Vector3 bottomRight = m_MapCenter;
-        bottomRight.x -= m_TileSize * (m_RowCount - 1) / 2f;
-        bottomRight.y -= m_TileSize * (m_ColCount - 1) / 2f;
+        bottomRight.x -= m_TileSize * (Constants.NUM_ROWS - 1) / 2f;
+        bottomRight.y -= m_TileSize * (Constants.NUM_COLS - 1) / 2f;
 
         // Instantiate tiles
-        for (int x = 0; x < m_RowCount; x += 1) {
-            for (int y = 0; y < m_ColCount; y += 1) {
+        for (int x = 0; x < Constants.NUM_ROWS; x += 1) {
+            for (int y = 0; y < Constants.NUM_COLS; y += 1) {
                 Vector3 tilePosition = bottomRight;
                 tilePosition.x += m_TileSize * x;
                 tilePosition.y += m_TileSize * y;
@@ -52,14 +50,14 @@ public class MapManager : MonoBehaviour {
         }
 
         // Instantiate player faction
-        (int, int) playerFactionPosition = (m_Random.Next(m_RowCount), m_Random.Next(m_ColCount));
+        (int, int) playerFactionPosition = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
         SetTileFaction(playerFactionPosition, Constants.PLAYER_FACTION_INDEX);
 
         // Instantiate enemy factions
         for (int i = 0; i < m_NumEnemyFactions; i++) {
             bool instantiated = false;
             while (!instantiated) {
-                (int, int) pos = (m_Random.Next(m_RowCount), m_Random.Next(m_ColCount));
+                (int, int) pos = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
                 if (m_TileMap[pos.Item1, pos.Item2].GetFaction() == Constants.NO_FACTION_INDEX) {
                     SetTileFaction(pos, i);
                     instantiated = true;
