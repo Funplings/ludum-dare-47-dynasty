@@ -50,3 +50,4 @@ MonoBehaviour:
   m_NumEnemyFactions: 0
   m_PopupCanvas: {fileID: 0}
   uiManager: {fileID: 0}
+  decisionManager: {fileID: 0}
