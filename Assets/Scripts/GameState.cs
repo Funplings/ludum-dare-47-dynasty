@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class GameState
 {
@@ -11,6 +12,8 @@ public class GameState
         SOLDIER
     }
 
+    public string m_EmpireName;
+    public Color m_playerColor;
     public int m_Happiness = 50;
     public int m_Money = Constants.STARTING_MONEY;
     public int m_Food = 0;
