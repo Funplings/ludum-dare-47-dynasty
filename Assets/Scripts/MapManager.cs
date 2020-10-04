@@ -23,7 +23,7 @@ public class MapManager : MonoBehaviour {
 
     bool m_Rebelling = false;
 
-    void Start() {
+    void Awake() {
         m_StaticPopupCanvas = m_PopupCanvas;
         m_Random = new System.Random();
         InitalizeMap();
@@ -56,7 +56,7 @@ public class MapManager : MonoBehaviour {
                 tilePosition.y += m_TileSize * y;
                 GameObject tile = Instantiate(m_TilePrefab, tilePosition, Quaternion.identity, transform);
                 m_TileMap[x, y] = tile.GetComponent<TileController>();
-                m_TileMap[x, y].SetAttributes(x, y, 0);
+                m_TileMap[x, y].SetAttributes(x, y, TileController.TileType.NONE);
             }
         }
 
@@ -92,21 +92,40 @@ public class MapManager : MonoBehaviour {
     }
 
     public void EndDynasty(){
-        //reset happiness to 50
+        GameManager.instance.state.m_Happiness = 50;
+        uiManager.UpdateHappinessCount();
         decisionManager.SetupDecision();
     }
 
     #region Getters and Setters
     public int LabsCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.LAB){
+                count++;
+            }
+        }
+        return count;
     }
 
     public int FarmsCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.FARM){
+                count++;
+            }
+        }
+        return count;
     }
 
     public int TerritoryCount(){
-        return 0;
+        int count = 0;
+        foreach(TileController tile in m_TileMap){
+            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX){
+                count++;
+            }
+        }
+        return count;
     }
 
     public bool GetRebelling() {
@@ -119,6 +138,49 @@ public class MapManager : MonoBehaviour {
         if (rebelling == true) {
             TileController.SetMode(Constants.ABANDONING_MODE);
         }
+
     }
+
+    #endregion
+
+
+    #region Buying
+
+    public void Buy(Constants.ON_SALE item, int cost){
+        GameState state = GameManager.instance.state;
+
+        if(item == Constants.ON_SALE.PLACE_SOLDIER){
+            if( cost > state.m_Soldiers) return;
+
+            state.m_Soldiers -= cost;
+            uiManager.UpdateSoldiersCount();
+
+            print("Placed a soldier!");
+            return;
+        }
+
+        if( cost > state.m_Money ) return;
+
+        state.m_Money -= cost;
+        uiManager.UpdateMoneyCount();
+
+        switch(item){
+            case Constants.ON_SALE.FOOD:
+                state.m_Food++;
+                uiManager.UpdateFoodCount();
+                break;
+            case Constants.ON_SALE.SOLDIER:
+                state.m_Soldiers++;
+                uiManager.UpdateSoldiersCount();
+                break;
+            case Constants.ON_SALE.FARM:
+                print("Bought farm!");
+                break;
+            case Constants.ON_SALE.LAB:
+                print("Bought Lab!");
+                break;
+        }
+    }
+
     #endregion
 }

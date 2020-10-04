@@ -849,6 +849,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DecisionCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 971706761943793374, guid: 31190f411af3e54408e8b5e46a0e9265,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1107786435}
     - target: {fileID: 2065334937708773922, guid: 31190f411af3e54408e8b5e46a0e9265,
         type: 3}
       propertyPath: mapManager

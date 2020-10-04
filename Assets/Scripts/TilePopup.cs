@@ -11,10 +11,12 @@ public class TilePopup : MonoBehaviour {
     [SerializeField] Text m_ExpandText;
     TileController m_Tile;
 
+
+    void Awake() {
+        m_ExpandButton.onClick.AddListener(Expand);
+    }
+
     public void SetTile(TileController tile) {
-        m_PlaceSoldierButton.onClick.AddListener(PlaceSoldier);
-        m_PlaceFarmButton.onClick.AddListener(PlaceFarm);
-        m_PlaceLabButton.onClick.AddListener(PlaceLab);
         m_Tile = tile;
         if (m_Tile.m_ExpandTarget == null) {
             m_ExpandText.text = "Expand";
@@ -26,23 +28,14 @@ public class TilePopup : MonoBehaviour {
         }
     }
 
-    void PlaceSoldier() {
-        print("Place soldier");
-    }
-
-    void PlaceFarm() {
-        print("Place farm");
-    }
-
-    void PlaceLab() {
-        print("Place lab");
-    }
-
     void Expand() {
         m_Tile.ExpandTile();
     }
 
     void CancelExpansion() {
         m_Tile.CancelExpansion();
+        if (!m_Tile.m_WillExpand) {
+            m_Tile.ExpandTile();
+        }
     }
 }

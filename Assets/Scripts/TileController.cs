@@ -6,6 +6,19 @@ using UnityEngine.EventSystems;
 public class TileController: MonoBehaviour
 {
     #region Static variables
+
+    public enum TileType {
+        NONE,
+        FARM,
+        LAB,
+        MINE
+    }
+
+    // Constants
+    const int DEFAULT_MODE = 0;
+    const int SELECTING_MODE = 1;
+    const int EXPANDING_MODE = 2;
+
     static GameObject m_TilePopup;
     static TileController m_CurrSelectedTile;
     static int m_Mode;
@@ -31,9 +44,7 @@ public class TileController: MonoBehaviour
     // Position
     int m_XIndex;
     int m_YIndex;
-
-    // Metadata
-    int m_TileType; // 0 = None, 1 = Farm, 2 = Lab, 3 = Mine
+    TileType m_TileType; // 0 = None, 1 = Farm, 2 = Lab, 3 = Mine
     int m_Faction; // -1 = Player faction; -2 = no faction
     public bool m_WillExpand;
     public TileController m_ExpandTarget;
@@ -54,7 +65,7 @@ public class TileController: MonoBehaviour
     }
 
     // Initalize tile attributes
-    public void SetAttributes(int xIndex, int yIndex, int tileType) {
+    public void SetAttributes(int xIndex, int yIndex, TileType tileType) {
         m_XIndex = xIndex;
         m_YIndex = yIndex;
         m_TileType = tileType;
@@ -82,6 +93,10 @@ public class TileController: MonoBehaviour
 
     public int GetFaction() {
         return m_Faction;
+    }
+
+    public TileType GetTileType(){
+        return m_TileType;
     }
 
     void OnMouseDown() {

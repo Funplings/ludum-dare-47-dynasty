@@ -35,6 +35,13 @@ public class UIManager : MonoBehaviour
     void Start(){
         animator = GetComponent<Animator>();
         m_rebellion = GetComponent<RebellionManager>();
+        UpdateHappinessCount();
+        UpdateMoneyCount();
+        UpdateFoodCount();
+        UpdateSoldiersCount();
+        UpdateTerritoryCount();
+        UpdateFarmCount();
+        UpdateLabCount();
     }
     
 
@@ -44,32 +51,35 @@ public class UIManager : MonoBehaviour
         m_DynastyText.text = string.Format("<b>The <i>{0}</i> Dynasty<b>", GameManager.instance.state.m_currentDynasty.name);
     }
 
-    public void UpdateHappinessCount(int happiness) {
-        m_HappinessInfo.UpdateCount(happiness);
+    public void UpdateHappinessCount() {
+        m_HappinessInfo.UpdateCount(GameManager.instance.state.m_Happiness);
     }
 
-    public void UpdateMoneyCount(int money) {
-        m_MoneyInfo.UpdateCount(money);
+    public void UpdateMoneyCount() {
+        m_MoneyInfo.UpdateCount(GameManager.instance.state.m_Money);
+        m_investControl.UpdateText();
     }
 
-    public void UpdateFoodCount(int food) {
-        m_FoodInfo.UpdateCount(food);
+    public void UpdateFoodCount() {
+        m_FoodInfo.UpdateCount(GameManager.instance.state.m_Food);
+        m_feedControl.UpdateText();
     }
 
-    public void UpdateSoldiersCount(int soldiers) {
-        m_SoldiersInfo.UpdateCount(soldiers);
+    public void UpdateSoldiersCount() {
+        m_SoldiersInfo.UpdateCount(GameManager.instance.state.m_Soldiers);
     }
 
-    public void UpdateTerritoryCount(int territories) {
-        m_TerritoryText.text = string.Format("Territories Owned: {0}", territories);
+    public void UpdateTerritoryCount() {
+        m_TerritoryText.text = string.Format("Territories Owned: {0}", m_MapManager.TerritoryCount());
     }
 
-    public void UpdateFarmCount(int farms) {
-        m_FarmText.text = string.Format("Farms Owned: {0}", farms);
+    public void UpdateFarmCount() {
+        m_FarmText.text = string.Format("Farms Owned: {0}", m_MapManager.FarmsCount());
     }
 
-    public void UpdateLabCount(int labs) {
-        m_LabText.text = string.Format("Labs Owned: {0}", labs);
+    public void UpdateLabCount() {
+        m_LabText.text = string.Format("Labs Owned: {0}", m_MapManager.LabsCount());
+
     }
     
     #endregion Map UI
@@ -83,8 +93,22 @@ public class UIManager : MonoBehaviour
     }
 
     public void PlayRound(){
-        // Alert("Pizza");
-        StartRebellion();
+        if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
+            print("ROUND");
+            m_feedControl.Pay();
+            m_investControl.Pay();
+            UpdateFoodCount();
+            UpdateMoneyCount();
+            UpdateHappinessCount();
+
+            if(GameManager.instance.state.m_Happiness == 0){
+                StartRebellion();
+            }
+            else if(GameManager.instance.state.m_Happiness == 100){
+                print("YOU WIN!");
+            }
+        }
+        
     }
 
     public void StartRebellion(){
