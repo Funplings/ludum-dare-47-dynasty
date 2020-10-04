@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour {
 
@@ -9,6 +10,9 @@ public class MapManager : MonoBehaviour {
     [SerializeField] int m_TileSize;
     [SerializeField] Vector3 m_MapCenter;
     [SerializeField] int m_NumEnemyFactions;
+    [SerializeField] Canvas m_PopupCanvas;
+
+    public static Canvas m_StaticPopupCanvas = null;
 
     // Tile map
     TileController[,] m_TileMap;
@@ -16,6 +20,7 @@ public class MapManager : MonoBehaviour {
     System.Random m_Random;
 
     void Start() {
+        m_StaticPopupCanvas = m_PopupCanvas;
         m_Random = new System.Random();
         InitalizeMap();
     }
