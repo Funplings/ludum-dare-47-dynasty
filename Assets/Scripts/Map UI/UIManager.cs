@@ -35,6 +35,10 @@ public class UIManager : MonoBehaviour
     void Start(){
         animator = GetComponent<Animator>();
         m_rebellion = GetComponent<RebellionManager>();
+        UpdateHappinessCount();
+        UpdateMoneyCount();
+        UpdateFoodCount();
+        UpdateSoldiersCount();
     }
     
 
@@ -44,32 +48,32 @@ public class UIManager : MonoBehaviour
         m_DynastyText.text = string.Format("<b>The <i>{0}</i> Dynasty<b>", GameManager.instance.state.m_currentDynasty.name);
     }
 
-    public void UpdateHappinessCount(int happiness) {
-        m_HappinessInfo.UpdateCount(happiness);
+    public void UpdateHappinessCount() {
+        m_HappinessInfo.UpdateCount(GameManager.instance.state.m_Happiness);
     }
 
-    public void UpdateMoneyCount(int money) {
-        m_MoneyInfo.UpdateCount(money);
+    public void UpdateMoneyCount() {
+        m_MoneyInfo.UpdateCount(GameManager.instance.state.m_Money);
     }
 
-    public void UpdateFoodCount(int food) {
-        m_FoodInfo.UpdateCount(food);
+    public void UpdateFoodCount() {
+        m_FoodInfo.UpdateCount(GameManager.instance.state.m_Food);
     }
 
-    public void UpdateSoldiersCount(int soldiers) {
-        m_SoldiersInfo.UpdateCount(soldiers);
+    public void UpdateSoldiersCount() {
+        m_SoldiersInfo.UpdateCount(GameManager.instance.state.m_Soldiers);
     }
 
-    public void UpdateTerritoryCount(int territories) {
-        m_TerritoryText.text = string.Format("Territories Owned: {0}", territories);
+    public void UpdateTerritoryCount() {
+        m_TerritoryText.text = string.Format("Territories Owned: {0}", mapManager.TerritoryCount());
     }
 
-    public void UpdateFarmCount(int farms) {
-        m_FarmText.text = string.Format("Farms Owned: {0}", farms);
+    public void UpdateFarmCount() {
+        m_FarmText.text = string.Format("Farms Owned: {0}", mapManager.FarmsCount());
     }
 
-    public void UpdateLabCount(int labs) {
-        m_LabText.text = string.Format("Labs Owned: {0}", labs);
+    public void UpdateLabCount() {
+        m_LabText.text = string.Format("Labs Owned: {0}", mapManager.LabsCount());
     }
     
     #endregion Map UI
@@ -83,7 +87,6 @@ public class UIManager : MonoBehaviour
     }
 
     public void PlayRound(){
-        // Alert("Pizza");
         StartRebellion();
     }
 

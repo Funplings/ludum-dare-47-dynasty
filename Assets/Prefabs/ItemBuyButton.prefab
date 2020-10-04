@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1298209471859415925}
   - component: {fileID: 7883265198894043066}
   - component: {fileID: 7690990865002638548}
+  - component: {fileID: 729006217268596543}
   m_Layer: 5
   m_Name: ItemBuyButton
   m_TagString: Untagged
@@ -90,7 +91,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2981806518083363037}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 729006217268596543}
+        m_TargetAssemblyTypeName: BuyButton, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &729006217268596543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159842774302756146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793792cc9151e9a4f854530c6ecd1b4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapManager: {fileID: 0}
+  itemType: 0
+  costText: {fileID: 3320656573644444140}
+  cost: 2
+  useSoldierToken: 0
 --- !u!1 &5368657997101172573
 GameObject:
   m_ObjectHideFlags: 0
