@@ -933,6 +933,7 @@ MonoBehaviour:
   m_PlaceFarmButton: {fileID: 130709323248897321}
   m_PlaceLabButton: {fileID: 5591070019328970207}
   m_ExpandButton: {fileID: 992380127241445379}
+  m_ExpandText: {fileID: 6383164870384167449}
 --- !u!1 &8148008658026800600
 GameObject:
   m_ObjectHideFlags: 0
