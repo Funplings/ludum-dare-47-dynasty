@@ -182,7 +182,7 @@ public class UIManager : MonoBehaviour
 
         if(state.enemyFactions.Count > 0){
             foreach(Faction faction in state.enemyFactions){
-                faction.AddSoldier();
+                if(faction != Faction.None) faction.AddSoldier();
             }
             Alert("The enemies have expanded their forces!");
             yield return new WaitForSeconds(ALERT_TIME);

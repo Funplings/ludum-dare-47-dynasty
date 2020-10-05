@@ -181,6 +181,7 @@ public class MapManager : MonoBehaviour {
 
         if(item == Constants.ON_SALE.PLACE_SOLDIER){
             if( cost > state.m_Soldiers){
+                AudioManager.instance.Play("Invalid");
                 uiManager.Notice("Not enough soldiers...");
                 return;
             }

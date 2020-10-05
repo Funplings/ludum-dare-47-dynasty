@@ -86,6 +86,9 @@ public class TileController: MonoBehaviour
     public void SetFaction(Faction faction) {
         // Set faction
         m_Faction.RemoveTile(this);
+        if(m_Faction != Faction.GetPlayer() && m_Faction.TerritoryCount() == 0 && m_Faction != Faction.None){
+            GameManager.instance.state.enemyFactions.Remove(m_Faction);
+        }
         faction.AddTile(this);
         m_Faction = faction;
         m_SpriteRenderer.color = faction.m_Color;
