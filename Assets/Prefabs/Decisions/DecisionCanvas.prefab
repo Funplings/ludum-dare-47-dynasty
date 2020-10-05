@@ -2894,6 +2894,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBuyButton
       objectReference: {fileID: 0}
+    - target: {fileID: 729006217268596543, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: cost
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1298209471859415925, guid: 5160554b775fe014282105ea7e368a70,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3584,6 +3589,11 @@ PrefabInstance:
         type: 3}
       propertyPath: itemType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 729006217268596543, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: cost
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1298209471859415925, guid: 5160554b775fe014282105ea7e368a70,
         type: 3}

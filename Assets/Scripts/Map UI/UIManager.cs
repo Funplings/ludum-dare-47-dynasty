@@ -182,7 +182,10 @@ public class UIManager : MonoBehaviour
 
         if(state.enemyFactions.Count > 0){
             foreach(Faction faction in state.enemyFactions){
-                if(faction != Faction.None) faction.AddSoldier();
+                int count = Random.Range(1, 3);
+                for(int i = 0; i < count; i++){
+                    if(faction != Faction.None) faction.AddSoldier();
+                }
             }
             Alert("The enemies have expanded their forces!");
             yield return new WaitForSeconds(ALERT_TIME);
@@ -199,7 +202,7 @@ public class UIManager : MonoBehaviour
                         case 1:
                             Alert("The enemy has taken some of your land!", SIEGE_ALERT_TIME);
                             state.m_Happiness +=  Constants.FAILED_INVADE_HAPPINESS;
-                             state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
+                             state.m_Happiness = Mathf.Min(state.m_Happiness, 100);
                             UpdateHappinessCount();
                             break;
                         case 2:
@@ -226,7 +229,7 @@ public class UIManager : MonoBehaviour
         if(Faction.GetPlayer().TerritoryCount() == 0){
             GameManager.instance.LoadLose();
         }
-        else if(GameManager.instance.state.m_Happiness == 0){
+        else if(GameManager.instance.state.m_Happiness <= 0){
             StartRebellion();
         }
         else if(GameManager.instance.state.m_Happiness == 100){

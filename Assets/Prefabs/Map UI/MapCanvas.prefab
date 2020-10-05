@@ -928,7 +928,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 58.65
+  m_fontSize: 58.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3830,6 +3830,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBuyButton
       objectReference: {fileID: 0}
+    - target: {fileID: 729006217268596543, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: cost
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1298209471859415925, guid: 5160554b775fe014282105ea7e368a70,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3976,6 +3981,11 @@ PrefabInstance:
         type: 3}
       propertyPath: itemType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 729006217268596543, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: cost
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1298209471859415925, guid: 5160554b775fe014282105ea7e368a70,
         type: 3}

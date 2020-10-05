@@ -538,7 +538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 2
   costText: {fileID: 2923206495655945834}
-  cost: 4
+  cost: 10
 --- !u!1 &4498302997890218943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 3
   costText: {fileID: 1316863024794411437}
-  cost: 5
+  cost: 10
 --- !u!1 &5745324504710785309
 GameObject:
   m_ObjectHideFlags: 0

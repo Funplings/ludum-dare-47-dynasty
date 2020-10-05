@@ -63,7 +63,7 @@ public class EmpireControl : MonoBehaviour
             state.m_Money -= TotalCost();
             state.m_Happiness +=  Constants.UNINVESTED_HAPPINESS * complement + state.HappinessPerInvest() * count;
         }
-        state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
+        state.m_Happiness = Mathf.Min(state.m_Happiness, 100);
         count = 0;
         UpdateText();
     }

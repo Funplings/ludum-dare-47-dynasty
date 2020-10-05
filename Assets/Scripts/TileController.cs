@@ -340,13 +340,13 @@ public class TileController: MonoBehaviour
                     tile.m_ExpandTarget.SetSoldier(tile.GetSoldier() - 1);
                     tile.SetSoldier(0);
                     state.m_Happiness +=  Constants.SUCCEED_INVADE_HAPPINESS;
-                    state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
+                    state.m_Happiness = Mathf.Min(state.m_Happiness, 100);
                     uiManager.Alert("Your invasion succeeded!", UIManager.SIEGE_ALERT_TIME);
                 }
                 else{
                     tile.SetSoldier(0);
                     state.m_Happiness +=  Constants.FAILED_INVADE_HAPPINESS;
-                    state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
+                    state.m_Happiness = Mathf.Min(state.m_Happiness, 100);
                     uiManager.Alert("Your invasion failed!", UIManager.SIEGE_ALERT_TIME);
                 }
 

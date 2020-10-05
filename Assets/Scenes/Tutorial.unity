@@ -189,8 +189,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 2150773298
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5019608}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1976382139}
         m_TargetAssemblyTypeName: Tutorial, Assembly-CSharp
         m_MethodName: MoveLeft
         m_Mode: 1
@@ -707,8 +707,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 2150773298
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5019608}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1976382139}
         m_TargetAssemblyTypeName: Tutorial, Assembly-CSharp
         m_MethodName: MoveRight
         m_Mode: 1
@@ -1178,10 +1178,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slides:
-  - {fileID: 21300000, guid: 2e542b14af11443d987d22129d9a717a, type: 3}
-  - {fileID: 21300000, guid: 5f4756e7b2f13490b8f3d6c8fc2ce936, type: 3}
-  - {fileID: 21300000, guid: 10ca020b4ea7c4fbc9db039e6252d02c, type: 3}
-  - {fileID: 21300000, guid: 418cdf0d471a3405bac8a646212da6c8, type: 3}
+  - {fileID: 21300000, guid: 0e05d4a1669b30b4ba7b54162f7a9ef8, type: 3}
+  - {fileID: 21300000, guid: e6802a88b1e567b43a4242f14b13e1d6, type: 3}
+  - {fileID: 21300000, guid: 4129a4e8b650d55428b8dbd1b72ef2e4, type: 3}
+  - {fileID: 21300000, guid: b9b7df126cf3b494fa59efb593909510, type: 3}
+  - {fileID: 21300000, guid: dd1f00fa9b0e9b442a8808db5285857c, type: 3}
+  - {fileID: 21300000, guid: 7ab0eea23497894408b5f505af6f5080, type: 3}
+  - {fileID: 21300000, guid: fd534721b45d0ac41a94600ded78624b, type: 3}
+  - {fileID: 21300000, guid: 78d974bb1f564cb4ea71b4f83a49331c, type: 3}
   pageNumber: {fileID: 2129042728}
 --- !u!114 &1976382140
 MonoBehaviour:

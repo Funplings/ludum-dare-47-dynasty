@@ -55,12 +55,12 @@ public class RandomEvents : MonoBehaviour
 
     private static void PlusHappiness(){
         GameManager.instance.state.m_Happiness += 10;
-        GameManager.instance.state.m_Happiness = Mathf.Clamp(GameManager.instance.state.m_Happiness, 0, 100);
+        GameManager.instance.state.m_Happiness = Mathf.Min(GameManager.instance.state.m_Happiness, 100);
     }
 
     private static void MinusHappiness(){
         GameManager.instance.state.m_Happiness -= 10;
-        GameManager.instance.state.m_Happiness = Mathf.Clamp(GameManager.instance.state.m_Happiness, 0, 100);
+        GameManager.instance.state.m_Happiness = Mathf.Min(GameManager.instance.state.m_Happiness, 100);
     }
 
     private static void PlusFood(){

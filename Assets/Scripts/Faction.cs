@@ -104,14 +104,23 @@ public class Faction
             //Siege
             bool success = Random.value < TileController.InvasionChance(tileToExpand.GetSoldier(), expandToTile.GetSoldier());
             if(success){
-                expandToTile.SetFaction(tileToExpand.GetFaction());
-                expandToTile.SetSoldier(tileToExpand.GetSoldier() - 1);
-                tileToExpand.SetSoldier(0);
-                return 1;
+                if(expandToTile.GetFaction() == Faction.GetPlayer()){
+                    expandToTile.SetFaction(tileToExpand.GetFaction());
+                    expandToTile.SetSoldier(tileToExpand.GetSoldier() - 1);
+                    tileToExpand.SetSoldier(0);
+                    return 1;
+                }
+                else{
+                    expandToTile.SetFaction(tileToExpand.GetFaction());
+                    expandToTile.SetSoldier(tileToExpand.GetSoldier() - 1);
+                    tileToExpand.SetSoldier(0);
+                    return 2;
+                }
+                
             }
             else{
                 tileToExpand.SetSoldier(0);
-                return 2;
+                return 3;
             }
 
         }
