@@ -1,34 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-public class tutorial : MonoBehaviour
+public class Tutorial : MonoBehaviour
 {
-    public Sprite slide1;
-    public Sprite slide2;
-    public Sprite slide3;
-    public Sprite[] slides;
-    public int index = 0;
-    private int size = 3;
-    // Start is called before the first frame update
+    [SerializeField] private Sprite[] slides;
+    [SerializeField] private TMP_Text pageNumber;
 
-    private SpriteRenderer spriteRenderer;
+    private int index = 0;
+    private int max;
+    private Image background;
+
     void Start()
     {
-      spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-      Debug.Log(spriteRenderer);
-
-      /*
-      spriteRenderer.sprite = slide1;
-      spriteRenderer.sprite = slide2;
-      spriteRenderer.sprite = slide3;
-      */
-      slides = new Sprite[size];
-      slides[0] = slide1;
-      slides[1] = slide2;
-      slides[2] = slide3;
-      spriteRenderer.sprite = slides[index];
-      Debug.Log(index);
+      background = GetComponent<Image>();
+      max = slides.Length;
+      background.sprite = slides[index];
+      UpdatePage();
     }
 
     // Update is called once per frame
@@ -36,26 +26,31 @@ public class tutorial : MonoBehaviour
     {
       if (Input.GetKeyDown(KeyCode.RightArrow))
       {
-        index++;
-        Debug.Log(index);
-        if (index == size)
-        {
-          index = 0;
-        }
+        MoveRight();
       }
       if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
-        index--;
-        if (index == -1)
-        {
-          index = size - 1;
-        }
+        MoveLeft();
       }
-      if (Input.GetMouseButtonDown(0))
-      {
-        GameManager.instance.LoadGame();
-      }
-      spriteRenderer.sprite = slides[index];
-      //Debug.Log(index);
     }
+
+    public void MoveRight(){
+      index++;
+      if(index == max){
+        GameManager.instance.LoadMainMenu();
+        return;
+      }
+      UpdatePage();
+    }
+
+    public void MoveLeft(){
+      index = Mathf.Max(0, index - 1);
+      UpdatePage();
+    }
+
+    private void UpdatePage(){
+      background.sprite = slides[index];
+      pageNumber.text = string.Format("{0}/{1}", index + 1, max);
+    }
+
 }
