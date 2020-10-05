@@ -720,11 +720,6 @@ PrefabInstance:
       propertyPath: m_MapManager
       value: 
       objectReference: {fileID: 1834055079}
-    - target: {fileID: 5609583530409745678, guid: cabb63c74ee6b204c83d6cadde7e265b,
-        type: 3}
-      propertyPath: m_BlocksRaycasts
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6063895974633175893, guid: cabb63c74ee6b204c83d6cadde7e265b,
         type: 3}
       propertyPath: m_AnchorMin.y

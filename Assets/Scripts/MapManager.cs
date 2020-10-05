@@ -83,7 +83,7 @@ public class MapManager : MonoBehaviour {
 
         // Make the first mines
         for (int i = 0; i < Constants.NUM_STARTING_MINES; i++){
-            RandomSpawnMine();
+            RandomSpawnMine(true);
         }
     }
 
@@ -120,6 +120,7 @@ public class MapManager : MonoBehaviour {
     #endregion
 
     public void StartDynasty(){
+        uiManager.UpdateAll();
         uiManager.UpdateDynasty();
         uiManager.ShowMapUI(true);
     }
@@ -201,17 +202,35 @@ public class MapManager : MonoBehaviour {
                 TileController.GetCurrentTile().SetTileType(TileController.TileType.FARM);
                 TileController.ClearTilePopup();
                 TileController.ClearSelectedTile();
+                uiManager.UpdateFarmCount();
                 break;
             case Constants.ON_SALE.LAB:
                 if( !TileController.GetCurrentTile().NewBuildingValid() ) return;
                 TileController.GetCurrentTile().SetTileType(TileController.TileType.LAB);
                 TileController.ClearTilePopup();
                 TileController.ClearSelectedTile();
+                uiManager.UpdateLabCount();
                 break;
         }
 
         state.m_Money -= cost;
         uiManager.UpdateMoneyCount();
+    }
+
+    #endregion
+
+    #region Turn
+
+    public int CollectTaxes(){
+        return Faction.GetPlayer().TerritoryCount() * GameManager.instance.state.RevenuePerTerritory();
+    }
+
+    public int HarvestFarms(){
+        return Faction.GetPlayer().FarmCount() * Constants.FARM_FOOD;
+    }
+
+    public int Mine(){
+        return Faction.GetPlayer().MineCount() * Constants.MINE_MONEY;
     }
 
     #endregion

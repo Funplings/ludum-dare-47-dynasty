@@ -25,7 +25,7 @@ public class GameState
 
     //Happiness per investment
     public int HappinessPerInvest(){
-        return m_perks.Contains(Perk.INVEST) ? Constants.PERK_HAPPY_PER_INVEST : Constants.HAPPY_PER_INVEST;
+        return m_perks.Contains(Perk.INVEST) ? Constants.PERK_INVESTED_HAPPINESS : Constants.INVESTED_HAPPINESS;
     }
 
     //Revenue per territory

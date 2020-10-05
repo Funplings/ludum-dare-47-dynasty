@@ -32,10 +32,12 @@ public class Faction
     }
 
     public void RemoveTile(TileController tile){
+        if(!ownedTiles.Contains(tile)) return;
         ownedTiles.Remove(tile);
     }
 
     public void AddTile(TileController tile){
+        if(ownedTiles.Contains(tile)) return;
         ownedTiles.Add(tile);
     }
 
@@ -59,6 +61,16 @@ public class Faction
         return count;
     }
 
+    public int MineCount(){
+        int count = 0;
+        foreach(TileController tile in ownedTiles){
+            if(tile.GetTileType() == TileController.TileType.MINE){
+                count++;
+            }
+        }
+        return count;
+    }
+
     public int TerritoryCount(){
         return ownedTiles.Count;
     }
@@ -75,10 +87,41 @@ public class Faction
         return list[Random.Range(0, list.Count)];
     } 
 
-    public void MaybeSiege(){
-        if(Random.value < Constants.CHANCE_TO_SIEGE){
-            //siege
+    // -1 = unable to siege, 0 = basic expansion, 1 = successful siege to player, 2 = successful siege to nonplayer, 3 = failed siege
+    public int MaybeSiege(){
+        List<TileController> canExpandTiles = new List<TileController>();
+        foreach(TileController tile in ownedTiles){
+            if(tile.canExpand(this)){
+                canExpandTiles.Add(tile);
+            }
         }
+        if(canExpandTiles.Count == 0) return -1;
+
+        TileController tileToExpand = RandomFromList(canExpandTiles);
+        TileController expandToTile = RandomFromList(tileToExpand.ExpandOptions());
+
+        if(expandToTile.GetFaction() != Faction.None){
+            //Siege
+            bool success = Random.value < TileController.InvasionChance(tileToExpand.GetSoldier(), expandToTile.m_ExpandTarget.GetSoldier());
+            if(success){
+                expandToTile.SetFaction(tileToExpand.GetFaction());
+                expandToTile.SetSoldier(tileToExpand.GetSoldier() - 1);
+                tileToExpand.SetSoldier(0);
+                return 1;
+            }
+            else{
+                tileToExpand.SetSoldier(0);
+                return 2;
+            }
+
+        }
+        else{
+            expandToTile.SetFaction(Faction.GetPlayer());
+            expandToTile.SetSoldier(tileToExpand.GetSoldier() - 1);
+            tileToExpand.SetSoldier(0);
+            return 0;
+        }
+
     }
 
     public void RemoveAllSoldiers(){

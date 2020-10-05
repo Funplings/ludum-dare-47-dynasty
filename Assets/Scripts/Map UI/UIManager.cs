@@ -38,6 +38,11 @@ public class UIManager : MonoBehaviour
     void Start(){
         animator = GetComponent<Animator>();
         m_rebellion = GetComponent<RebellionManager>();
+        UpdateAll();
+    }
+
+    public void UpdateAll(){
+        UpdateDynasty();
         UpdateHappinessCount();
         UpdateMoneyCount();
         UpdateFoodCount();
@@ -51,7 +56,7 @@ public class UIManager : MonoBehaviour
     #region Map UI
 
     public void UpdateDynasty(){
-        m_DynastyText.text = string.Format("<b>The <i>{0}</i> Dynasty<b>", GameManager.instance.state.m_currentDynasty.name);
+        if(GameManager.instance.state.m_currentDynasty != null) m_DynastyText.text = string.Format("<b>The <i>{0}</i> Dynasty<b>", GameManager.instance.state.m_currentDynasty.name);
     }
 
     public void UpdateHappinessCount() {
@@ -93,6 +98,7 @@ public class UIManager : MonoBehaviour
     
     public void ShowMapUI(bool state, float transitionTime = 0){
         mapUI.interactable = state;
+        mapUI.blocksRaycasts = state;
         mapUI.DOFade(state ? 1 : 0, transitionTime);
     }
 
@@ -101,11 +107,16 @@ public class UIManager : MonoBehaviour
     }
 
     private void NextRound(){
+        UpdateAll();
         GameManager.instance.state.m_turn++;
         ShowMapUI(true, .5f);
     }
 
     public void PlayRound(){
+        TileController.ClearAllExpansionOptions();
+        TileController.ClearTilePopup();
+        TileController.ClearSelectedTile();
+        
         if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
             ShowMapUI(false, .5f);
             StartCoroutine(PlayRoundCoroutine());
@@ -116,16 +127,84 @@ public class UIManager : MonoBehaviour
     }
 
     IEnumerator PlayRoundCoroutine(){
+        GameState state = GameManager.instance.state;
 
         yield return new WaitForSeconds(.5f);
 
         m_feedControl.Pay();
-        m_investControl.Pay();
         UpdateFoodCount();
+        UpdateHappinessCount();
+
+        Alert("Feeding the empire...");
+        yield return new WaitForSeconds(1);
+
+        m_investControl.Pay();
         UpdateMoneyCount();
         UpdateHappinessCount();
 
-        TileController.ExpandTiles();
+        Alert("Managing investments...");
+        yield return new WaitForSeconds(1);
+
+        int taxes = m_MapManager.CollectTaxes();
+        state.m_Money += taxes;
+        UpdateMoneyCount();
+
+        Alert("Managing investments...");
+        yield return new WaitForSeconds(1);
+
+        int harvest = m_MapManager.HarvestFarms();
+        if(harvest > 0){
+            state.m_Food += harvest;
+            UpdateFoodCount();
+
+            Alert("Harvesting farms...");
+            yield return new WaitForSeconds(1);
+        }
+
+        int mined = m_MapManager.Mine();
+        if(mined > 0){
+            state.m_Money += mined;
+            UpdateMoneyCount();
+
+            Alert("Carving jade...");
+            yield return new WaitForSeconds(1);
+        }
+
+        yield return StartCoroutine(TileController.ExpandTiles());
+
+        if(state.enemyFactions.Count > 0){
+            foreach(Faction faction in state.enemyFactions){
+                faction.AddSoldier();
+            }
+            Alert("The enemies have expanded their forces!");
+            yield return new WaitForSeconds(1);
+
+            foreach(Faction faction in state.enemyFactions){
+                bool expand = Random.value < Constants.CHANCE_TO_EXPAND;
+                if(expand){
+                    // -1 = unable to siege, 0 = basic expansion, 1 = successful siege to player, 2 = successful siege to nonplayer, 3 = failed siege
+                    int result = faction.MaybeSiege();
+                    switch(result){
+                        case 0:
+                            Alert("The enemy has expanded their territory!");
+                            break;
+                        case 1:
+                            Alert("The enemy has taken some of your land!");
+                            state.m_Happiness +=  Constants.FAILED_INVADE_HAPPINESS;
+                             state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
+                            UpdateHappinessCount();
+                            break;
+                        case 2:
+                            Alert("The enemies fought each other!");
+                            break;
+                        case 3:
+                            Alert("The enemies failed to expand their land...");
+                            break;
+                    }
+                    if(result != -1) yield return new WaitForSeconds(2);
+                }
+            }
+        }
 
         if(Faction.GetPlayer().TerritoryCount() == 0){
             GameManager.instance.LoadLose();

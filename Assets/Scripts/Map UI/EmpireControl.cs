@@ -66,7 +66,7 @@ public class EmpireControl : MonoBehaviour
         }
         else{
             state.m_Money -= TotalCost();
-            state.m_Happiness +=  Constants.UNINVESTED_HAPPINESS * complement + Constants.INVESTED_HAPPINESS * count;
+            state.m_Happiness +=  Constants.UNINVESTED_HAPPINESS * complement + state.HappinessPerInvest() * count;
         }
         state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
         count = 0;

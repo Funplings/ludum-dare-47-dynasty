@@ -79,6 +79,8 @@ public class TileController: MonoBehaviour
 
     public void SetFaction(Faction faction) {
         // Set faction
+        m_Faction.RemoveTile(this);
+        faction.AddTile(this);
         m_Faction = faction;
         m_SpriteRenderer.color = faction.m_Color;
     }
@@ -136,8 +138,8 @@ public class TileController: MonoBehaviour
         tileSoldiers.SetCount(value);
     }
 
-    public void GetSoldier(){
-        tileSoldiers.GetCount();
+    public int GetSoldier(){
+        return tileSoldiers.GetCount();
     }
 
     #endregion
@@ -225,10 +227,7 @@ public class TileController: MonoBehaviour
                 }
             }
 
-            // Clear all expansion options
-            while (m_ExpansionOptions.Count > 0) {
-                m_ExpansionOptions[0].ClearExpansionOption();
-            }
+            ClearAllExpansionOptions();
 
             // Clear the selected tile
             ClearSelectedTile();
@@ -310,12 +309,43 @@ public class TileController: MonoBehaviour
     #endregion
 
     #region Expansion
-    public static void ExpandTiles() {
+    public static IEnumerator ExpandTiles() {
+        UIManager uiManager = FindObjectOfType<UIManager>(); //FIXME THIS IS AWFUL
+        GameState state = GameManager.instance.state;
         while (m_ExpandingTiles.Count > 0) {
             TileController tile = m_ExpandingTiles[0];
-            tile.m_ExpandTarget.SetFaction(Faction.GetPlayer());
+            
+            if(tile.m_ExpandTarget.GetFaction() != Faction.None){
+                //Siege
+                bool success = Random.value < InvasionChance(tile.GetSoldier(), tile.m_ExpandTarget.GetSoldier(), true);
+                if(success){
+                    tile.m_ExpandTarget.SetFaction(Faction.GetPlayer());
+                    tile.m_ExpandTarget.SetSoldier(tile.GetSoldier() - 1);
+                    tile.SetSoldier(0);
+                    state.m_Happiness +=  Constants.SUCCEED_INVADE_HAPPINESS;
+                    state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
+                    uiManager.Alert("Your invasion succeeded!");
+                }
+                else{
+                    tile.SetSoldier(0);
+                    state.m_Happiness +=  Constants.FAILED_INVADE_HAPPINESS;
+                    state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
+                    uiManager.Alert("Your invasion failed!");
+                }
+
+            }
+            else{
+                tile.m_ExpandTarget.SetFaction(Faction.GetPlayer());
+                tile.m_ExpandTarget.SetSoldier(tile.GetSoldier() - 1);
+                tile.SetSoldier(0);
+                uiManager.Alert("Your empire has expanded.");
+            }
+            
             tile.CancelExpansion();
+            
+            yield return new WaitForSeconds(2);
         }
+        
     }
 
     public void SetExpansionOption() {
@@ -327,6 +357,15 @@ public class TileController: MonoBehaviour
 
         // Add self to expansion options list
         m_ExpansionOptions.Add(this);
+    }
+
+    public static void ClearAllExpansionOptions(){
+        // Clear all expansion options
+        while (m_ExpansionOptions.Count > 0) {
+            m_ExpansionOptions[0].ClearExpansionOption();
+        }
+
+        m_Mode = Constants.DEFAULT_MODE;    
     }
 
     public void ClearExpansionOption() {
@@ -381,6 +420,58 @@ public class TileController: MonoBehaviour
         }
     }
 
+    public bool canExpand(Faction faction){
+        // Determine which tiles can be expanded to
+        // Above
+        if (m_YIndex < Constants.NUM_ROWS - 1) {
+            TileController aboveTile = MapManager.m_TileMap[m_XIndex, m_YIndex + 1];
+            if(aboveTile.GetFaction() != faction) return true;
+        }
+        // Below
+        if (m_YIndex > 0) {
+            TileController belowTile = MapManager.m_TileMap[m_XIndex, m_YIndex - 1];
+            if(belowTile.GetFaction() != faction) return true;
+        }
+        // Left
+        if (m_XIndex > 0) {
+            TileController leftTile = MapManager.m_TileMap[m_XIndex - 1, m_YIndex];
+            if(leftTile.GetFaction() != faction) return true;
+        }
+        // Right
+        if (m_XIndex < Constants.NUM_COLS - 1) {
+            TileController rightTile = MapManager.m_TileMap[m_XIndex + 1, m_YIndex];
+            if(rightTile.GetFaction() != faction) return true;
+        }
+        return false;
+    }
+
+    //Assumes there's a valid tile
+    public List<TileController> ExpandOptions(){
+        List<TileController> options = new List<TileController>();
+        // Above
+        if (m_YIndex < Constants.NUM_ROWS - 1) {
+            TileController aboveTile = MapManager.m_TileMap[m_XIndex, m_YIndex + 1];
+            options.Add(aboveTile);
+        }
+        // Below
+        if (m_YIndex > 0) {
+            TileController belowTile = MapManager.m_TileMap[m_XIndex, m_YIndex - 1];
+            options.Add(belowTile);
+        }
+        // Left
+        if (m_XIndex > 0) {
+            TileController leftTile = MapManager.m_TileMap[m_XIndex - 1, m_YIndex];
+            options.Add(leftTile);
+        }
+        // Right
+        if (m_XIndex < Constants.NUM_COLS - 1) {
+            TileController rightTile = MapManager.m_TileMap[m_XIndex + 1, m_YIndex];
+            options.Add(rightTile);
+        }
+
+        return options;
+    }
+
     public void CancelExpansion() {
         // Cancel expansion
         Destroy(m_ExpandTarget.m_ExpansionIcon);
@@ -421,4 +512,17 @@ public class TileController: MonoBehaviour
         return m_AbandonedTiles.Count;
     }
     #endregion
+
+    public static float InvasionChance(int attackerCount, int defenderCount, bool player = false){
+        if(defenderCount == 0){
+            return 1;
+        }
+        int difference = attackerCount - defenderCount;
+        //Use logistic function
+        float chance = (float) 1 / (1 + Mathf.Exp(-1 * difference));
+        if(player){
+            chance = GameManager.instance.state.GetSoliderChance(chance);
+        }
+        return chance;
+    }
 }
