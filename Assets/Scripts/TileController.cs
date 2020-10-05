@@ -65,6 +65,12 @@ public class TileController: MonoBehaviour
     #endregion
 
     public void Awake() {
+        //Reset statics
+        m_Mode = Constants.DEFAULT_MODE;
+        if(m_ExpansionOptions.Count != 0) m_ExpansionOptions = new List<TileController>();
+        if(m_AbandonedTiles.Count != 0) m_AbandonedTiles = new List<TileController>();
+        if(m_ExpandingTiles.Count != 0) m_ExpandingTiles = new List<TileController>();
+
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         tileSoldiers = GetComponentInChildren<TileSoldiers>();
     }
@@ -391,6 +397,11 @@ public class TileController: MonoBehaviour
             print("Error: this tile is not selected");
         }
 
+        if(tileSoldiers.GetCount() == 0){
+            //Play invalid sfx
+            return;
+        }
+
         // Clear the tile popup
         ClearTilePopup();
 
@@ -401,34 +412,36 @@ public class TileController: MonoBehaviour
         // Above
         if (m_YIndex < Constants.NUM_ROWS - 1) {
             TileController aboveTile = MapManager.m_TileMap[m_XIndex, m_YIndex + 1];
-            if (aboveTile.GetFaction() == Faction.None && !aboveTile.m_WillExpand) {
+            if (aboveTile.GetFaction() != Faction.GetPlayer() && !aboveTile.m_WillExpand) {
                 aboveTile.SetExpansionOption();
             }
         }
         // Below
         if (m_YIndex > 0) {
             TileController belowTile = MapManager.m_TileMap[m_XIndex, m_YIndex - 1];
-            if (belowTile.GetFaction() == Faction.None && !belowTile.m_WillExpand) {
+            if (belowTile.GetFaction() != Faction.GetPlayer() && !belowTile.m_WillExpand) {
                 belowTile.SetExpansionOption();
             }
         }
         // Left
         if (m_XIndex > 0) {
             TileController leftTile = MapManager.m_TileMap[m_XIndex - 1, m_YIndex];
-            if (leftTile.GetFaction() == Faction.None && !leftTile.m_WillExpand) {
+            if (leftTile.GetFaction() != Faction.GetPlayer() && !leftTile.m_WillExpand) {
                 leftTile.SetExpansionOption();
             }
         }
         // Right
         if (m_XIndex < Constants.NUM_COLS - 1) {
             TileController rightTile = MapManager.m_TileMap[m_XIndex + 1, m_YIndex];
-            if (rightTile.GetFaction() == Faction.None && !rightTile.m_WillExpand) {
+            if (rightTile.GetFaction() != Faction.GetPlayer() && !rightTile.m_WillExpand) {
                 rightTile.SetExpansionOption();
             }
         }
     }
 
     public bool canExpand(Faction faction){
+        if(tileSoldiers.GetCount() == 0) return false;
+
         // Determine which tiles can be expanded to
         // Above
         if (m_YIndex < Constants.NUM_ROWS - 1) {

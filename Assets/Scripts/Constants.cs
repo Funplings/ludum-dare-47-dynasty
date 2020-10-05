@@ -20,7 +20,7 @@ public static class Constants {
 
     public const int YEARS_PER_TURN = 25;
 
-    public const float CHANCE_RANDOM_EVENT = 1;
+    public const float CHANCE_RANDOM_EVENT = .3f;
 
     #region Rebellion
     public const float PERCENT_FOOD_LOST = .25f;

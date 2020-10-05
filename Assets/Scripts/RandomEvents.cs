@@ -21,15 +21,15 @@ public class RandomEvents : MonoBehaviour
 
     public static List<RandomEvent> randomEvents = new List<RandomEvent>{
         new RandomEvent("A new enemy empire has risen!", "New empire appeared!", NewEmpire),
-        // new RandomEvent("A grand festival brings great joy to your citizens!", "Happiness increased!", PlusHappiness),
-        // new RandomEvent("The citizens grow displeased for some reason, I can't think of anything.", "Happiness decreased...",MinusHappiness),
-        // new RandomEvent("A bountiful harvest brings extra food!", "Food increased!",PlusFood),
-        // new RandomEvent("A flood ruins your food reserves!", "Food decreased...",MinusFood),
-        // new RandomEvent("Some soldiers were feeling kinda patriotic, so your army grew!", "Army increased!",PlusSoldier),
-        // new RandomEvent("Being in the army sucks, so you lost some soldiers.", "Army decreased...",MinusSoldier),
-        // new RandomEvent("C-c-c-c-c-cash baby!", "Money increased!",PlusMoney),
-        // new RandomEvent("A maniac came and ate some of the money in the national bank.","Money decreased...", MinusMoney),
-        // new RandomEvent("A new money source has been discovered!", "New jade reserve appeared!",AddMine),
+        new RandomEvent("A grand festival brings great joy to your citizens!", "Happiness increased!", PlusHappiness),
+        new RandomEvent("The citizens grow displeased for some reason, I can't think of anything.", "Happiness decreased...",MinusHappiness),
+        new RandomEvent("A bountiful harvest brings extra food!", "Food increased!",PlusFood),
+        new RandomEvent("A flood ruins your food reserves!", "Food decreased...",MinusFood),
+        new RandomEvent("Some soldiers were feeling kinda patriotic, so your army grew!", "Army increased!",PlusSoldier),
+        new RandomEvent("Being in the army sucks, so you lost some soldiers.", "Army decreased...",MinusSoldier),
+        new RandomEvent("C-c-c-c-c-cash baby!", "Money increased!",PlusMoney),
+        new RandomEvent("A maniac came and ate some of the money in the national bank.","Money decreased...", MinusMoney),
+        new RandomEvent("A new money source has been discovered!", "New jade reserve appeared!",AddMine),
 
     };
 
