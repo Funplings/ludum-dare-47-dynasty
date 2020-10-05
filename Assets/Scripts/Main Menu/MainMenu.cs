@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,11 +16,11 @@ public class MainMenu : MonoBehaviour
     public float b;
 
     private Color _colorSelected;
-    private string _nationName;
     [SerializeField] private Image image;
-    [SerializeField] private Button play;
-    [SerializeField] private Button tutorial;
+    [SerializeField] private RectTransform play;
+    [SerializeField] private RectTransform tutorial;
     [SerializeField] private TMP_InputField input;
+    [SerializeField] private TMP_Text nameWarning;
 
     void Start()
     {
@@ -27,40 +28,28 @@ public class MainMenu : MonoBehaviour
         this.g = 0;
         this.b = 0;
         image.color = new Color(r, g, b);
-        play.transform.localPosition = new Vector3(225, -100, 0);
-        tutorial.transform.localPosition = new Vector3(200, -30, 0);
-        input.onEndEdit.AddListener(SubmitName);
-    }
 
-    void Update()
-    {
-        float ppos = play.transform.localPosition[0];
-        float tpos = tutorial.transform.localPosition[0];
-        if (tpos > 115)
-        {
-            play.transform.localPosition = new Vector3(ppos - 1, -100, 0);
-            tutorial.transform.localPosition = new Vector3(tpos - 1, -30, 0);
-        } else if (ppos > 115)
-        {
-            play.transform.localPosition = new Vector3(ppos - 1, -100, 0);
-        }
-
+        tutorial.DOAnchorPosX(100, .5f).From();
+        play.DOAnchorPosX(100, .5f).From();
     }
 
     public void PlayGame() {
+        if( String.IsNullOrWhiteSpace(input.text)){
+            nameWarning.text = "Please enter an empire name!";
+            nameWarning.DOKill();
+            nameWarning.DOFade(1, .1f).OnComplete(() =>nameWarning.DOFade(0, 1f).SetDelay(.2f));
+            return;
+        }
+
+        GameManager.instance.state.m_EmpireName = input.text;
+        GameManager.instance.state.m_playerColor = image.color;
         GameManager.instance.LoadGame();
-        _colorSelected = image.color;
+        
     }
     
     public void PlayTutorial()
     {
         GameManager.instance.LoadTutorial();
-        _colorSelected = image.color;
-    }
-
-    private void SubmitName(string text)
-    {
-        _nationName = text;
     }
     
     public void sliderCallbackR(float value)
