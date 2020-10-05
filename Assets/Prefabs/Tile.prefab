@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0b28084c2dfbd49a103ce515bed540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingSprite: {fileID: 7804249087608479676}
   m_TilePopupPrefab: {fileID: 7208263480356824348, guid: 9820ffc83a77596469c062f2c55312e8,
     type: 3}
   m_SelectCoverPrefab: {fileID: 3131480187571663200, guid: f872c26e5b78cac4f91b96ad511732f7,
@@ -311,6 +312,9 @@ MonoBehaviour:
     type: 3}
   m_AbandonMarkerPrefab: {fileID: 941985399990454704, guid: 13915ff487cd75c4fa73bf58d1e5b2b9,
     type: 3}
+  farmSprite: {fileID: 21300000, guid: ee448d276860a76469a3d44622f19732, type: 3}
+  labSprite: {fileID: 21300000, guid: a942daf532e6ea942bc4ebefa2b75b11, type: 3}
+  mineSprite: {fileID: 21300000, guid: ee97bbb26f9e7054f813bf855238f518, type: 3}
   m_WillExpand: 0
   m_ExpandTarget: {fileID: 0}
   m_SelectCover: {fileID: 0}
@@ -342,7 +346,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8862365643333513064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.596, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2305520190626162635}
@@ -387,13 +391,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.76862746}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.2, y: 2.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

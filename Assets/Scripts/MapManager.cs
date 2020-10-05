@@ -79,7 +79,11 @@ public class MapManager : MonoBehaviour {
         // Instantiate enemy factions
         for (int i = 0; i < Constants.NUM_STARTING_ENEMIES; i++) {
             RandomSpawnFaction(startingFactions[i]);
-            
+        }
+
+        // Make the first mines
+        for (int i = 0; i < Constants.NUM_STARTING_MINES; i++){
+            RandomSpawnMine();
         }
     }
 
@@ -92,6 +96,18 @@ public class MapManager : MonoBehaviour {
                 instantiated = true;
             }
         }
+    }
+
+    //Return success or failure
+    bool RandomSpawnMine(bool repeatUntilSuccess = false){
+        do {
+            (int, int) pos = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
+            if (m_TileMap[pos.Item1, pos.Item2].NewBuildingValid()) {
+                m_TileMap[pos.Item1, pos.Item2].SetTileType(TileController.TileType.MINE);
+                return true;
+            }
+        } while(repeatUntilSuccess);
+        return false;
     }
 
     void SetTileFaction((int, int) position, Faction faction) {
@@ -141,16 +157,14 @@ public class MapManager : MonoBehaviour {
             if( cost > state.m_Soldiers) return;
 
             state.m_Soldiers -= cost;
+            TileController.GetCurrentTile().AddSoldier(1);
             uiManager.UpdateSoldiersCount();
-
-            print("Placed a soldier!");
             return;
         }
 
         if( cost > state.m_Money ) return;
 
-        state.m_Money -= cost;
-        uiManager.UpdateMoneyCount();
+        
 
         switch(item){
             case Constants.ON_SALE.FOOD:
@@ -162,12 +176,21 @@ public class MapManager : MonoBehaviour {
                 uiManager.UpdateSoldiersCount();
                 break;
             case Constants.ON_SALE.FARM:
-                print("Bought farm!");
+                if( !TileController.GetCurrentTile().NewBuildingValid() ) return;
+                TileController.GetCurrentTile().SetTileType(TileController.TileType.FARM);
+                TileController.ClearTilePopup();
+                TileController.ClearSelectedTile();
                 break;
             case Constants.ON_SALE.LAB:
-                print("Bought Lab!");
+                if( !TileController.GetCurrentTile().NewBuildingValid() ) return;
+                TileController.GetCurrentTile().SetTileType(TileController.TileType.LAB);
+                TileController.ClearTilePopup();
+                TileController.ClearSelectedTile();
                 break;
         }
+
+        state.m_Money -= cost;
+        uiManager.UpdateMoneyCount();
     }
 
     #endregion

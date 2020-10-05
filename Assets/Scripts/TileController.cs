@@ -24,12 +24,24 @@ public class TileController: MonoBehaviour
 
     #endregion
 
+    #region References
+    [SerializeField] SpriteRenderer buildingSprite;
+    #endregion
+
     #region Prefab variables
+    [Header("Prefabs")]
     [SerializeField] GameObject m_TilePopupPrefab;
     [SerializeField] GameObject m_SelectCoverPrefab;
     [SerializeField] GameObject m_ExpansionIconPrefab;
     [SerializeField] GameObject m_ExpandArrowPrefab;
     [SerializeField] GameObject m_AbandonMarkerPrefab;
+    #endregion
+
+    #region Sprites
+    [Header("Sprites")]
+    [SerializeField] Sprite farmSprite;
+    [SerializeField] Sprite labSprite;
+    [SerializeField] Sprite mineSprite;
     #endregion
 
     #region Instance variables
@@ -38,29 +50,30 @@ public class TileController: MonoBehaviour
     int m_YIndex;
     TileType m_TileType; 
     Faction m_Faction = Faction.None;
-    public bool m_WillExpand;
-    public TileController m_ExpandTarget;
-    GameObject m_CurrSoldier;
+    [HideInInspector] public bool m_WillExpand;
+    [HideInInspector] public TileController m_ExpandTarget;
 
     // Markers
-    public GameObject m_SelectCover;
-    public GameObject m_ExpansionIcon;
-    public GameObject m_ExpandArrow;
-    public GameObject m_AbandonMarker;
+    [HideInInspector] public GameObject m_SelectCover;
+    [HideInInspector] public GameObject m_ExpansionIcon;
+    [HideInInspector] public GameObject m_ExpandArrow;
+    [HideInInspector] public GameObject m_AbandonMarker;
 
     // Sprite renderer
     SpriteRenderer m_SpriteRenderer;
+    TileSoldiers tileSoldiers;
     #endregion
 
     public void Awake() {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        tileSoldiers = GetComponentInChildren<TileSoldiers>();
     }
 
     // Initalize tile attributes
     public void SetAttributes(int xIndex, int yIndex, TileType tileType) {
         m_XIndex = xIndex;
         m_YIndex = yIndex;
-        m_TileType = tileType;
+        SetTileType(tileType);
         SetFaction(Faction.None);
     }
 
@@ -74,8 +87,63 @@ public class TileController: MonoBehaviour
         return m_Faction;
     }
 
+    #region Tile Type
+
     public TileType GetTileType(){
         return m_TileType;
+    }
+
+    public bool NewBuildingValid(){
+        // Check this space and all around it are NONE type
+        for(int i = m_XIndex - 1; i < m_XIndex + 2; i++){
+            for(int j = m_YIndex - 1; j < m_YIndex + 2; j++){
+                if(j > Constants.NUM_ROWS - 1 || j < 0 || i < 0 || i > Constants.NUM_COLS - 1 ) continue;
+                TileController tile = MapManager.m_TileMap[i, j];
+                if (tile.GetTileType() != TileType.NONE) return false;
+            }
+        }
+        return true;
+    }
+
+    public void SetTileType(TileType tileType){
+        m_TileType = tileType;
+        buildingSprite.enabled = true;
+        switch(tileType){
+            case TileType.NONE:
+                buildingSprite.enabled = false;
+                break;
+            case TileType.FARM:
+                buildingSprite.sprite = farmSprite;
+                break;
+            case TileType.LAB:
+                buildingSprite.sprite = labSprite;
+                break;
+            case TileType.MINE:
+                buildingSprite.sprite = mineSprite;
+                break;
+        }
+    }
+
+    #endregion
+
+    #region Soldiers
+
+    public void AddSoldier(int delta){
+        tileSoldiers.AddCount(delta);
+    }
+
+    public void SetSoldier(int value){
+        tileSoldiers.SetCount(value);
+    }
+
+    public void GetSoldier(){
+        tileSoldiers.GetCount();
+    }
+
+    #endregion
+
+    public static TileController GetCurrentTile(){
+        return m_CurrSelectedTile;
     }
 
     void OnMouseDown() {

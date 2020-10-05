@@ -16,6 +16,7 @@ public static class Constants {
     public const int NUM_ROWS = 10;
     public const int NUM_COLS = 10;
     public const int NUM_STARTING_ENEMIES = 2;
+    public const int NUM_STARTING_MINES = 3;
 
     #region Turn Variables
     public const int STARVING_HAPPINESS = -10;

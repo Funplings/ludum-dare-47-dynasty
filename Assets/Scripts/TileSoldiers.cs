@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 public class TileSoldiers : MonoBehaviour
 {
 
-    [SerializeField] Sprite sprite;
     int soldierCount = 0;
     private Grid grid;
     private Tilemap tilemap;
@@ -20,15 +19,33 @@ public class TileSoldiers : MonoBehaviour
         UpdateVisual();
     }
 
+    public void AddCount(int delta){
+        soldierCount = Mathf.Max(0, soldierCount + delta);
+        // print("SOLDIERCOUNT:" + soldierCount);
+        UpdateVisual();
+    }
+
     public void SetCount(int count){
         soldierCount = count;
         UpdateVisual();
     }
 
-    void UpdateVisual(){
-        tilemap.ClearAllTiles();
+    public int GetCount(){
+        return soldierCount;
+    }
 
-        int divisions = Mathf.CeilToInt(Mathf.Log(soldierCount, 2));
+    void UpdateVisual(){
+        if(soldierCount == 0){
+            gameObject.SetActive(false);
+            return;
+        }
+        else{
+            gameObject.SetActive(true);
+        }
+
+        tilemap.ClearAllTiles();
+        
+        int divisions = Mathf.Max(2, Mathf.CeilToInt(Mathf.Log(soldierCount, 2)));
         float gridSize = 1 / (float) divisions;
         grid.cellSize = new Vector3(gridSize, gridSize, 0);
 
@@ -41,9 +58,9 @@ public class TileSoldiers : MonoBehaviour
 
                 Vector3Int vec = new Vector3Int(i, j, 0);
                 tilemap.SetTile(vec, baseTile);
-                print(vec);
                 count++;
             }
         }
+        
     }
 }
