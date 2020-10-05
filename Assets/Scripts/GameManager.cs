@@ -73,6 +73,10 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    public void ResetGameState(){
+        state = new GameState();
+    }
+
     #region Constants
 
     private const string MAIN_MENU_SCENE = "MainMenu";
