@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8770552473021399769}
   - component: {fileID: 9199840191720743309}
-  - component: {fileID: 6109141638878357808}
+  - component: {fileID: 8667095234633358548}
   m_Layer: 0
   m_Name: Select Cover
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &6109141638878357808
+--- !u!95 &8667095234633358548
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
