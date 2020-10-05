@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e89db5ab291cd7141ae85012b2482840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 8300000, guid: 14552c42e7d9903469667453c49ffa3a, type: 3}
+  music: {fileID: 8300000, guid: bba0f597fbe40774b91d6d5f137ac3c7, type: 3}
   sfxs:
   - name: Start
     volume: 1
