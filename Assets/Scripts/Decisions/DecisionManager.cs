@@ -14,6 +14,7 @@ public class DecisionManager : MonoBehaviour
     [SerializeField] private CanvasGroup showMapButton; 
     [SerializeField] private CanvasGroup mainGroup; 
     [SerializeField] private TMP_Text nameWarning; 
+    [SerializeField] private TMP_Text empireName; 
     [SerializeField] private MapManager mapManager; 
     private CanvasGroup decisionCanvas;
     
@@ -22,6 +23,7 @@ public class DecisionManager : MonoBehaviour
 
     void Start(){
         decisionCanvas = GetComponent<CanvasGroup>();
+        empireName.text = String.Format("The <i>{0}</i> Empire", GameManager.instance.state.m_EmpireName);
         SetupDecision();
     }
 
@@ -30,8 +32,8 @@ public class DecisionManager : MonoBehaviour
         GameState state = GameManager.instance.state;
                 
         //update lab count
-        if(mapManager != null) labsCount = mapManager.LabsCount();
-        labOwnedCount.text = "Labs Owned (Perk Count): " + labsCount.ToString();
+        labsCount = Faction.GetPlayer().LabCount();
+        labOwnedCount.text = "Universities Owned (Perk Count): " + labsCount.ToString();
 
         //set dynasty number
         dynastyCount.text = "Dynasty " + (state.m_allDynasties.Count + 1).ToString();

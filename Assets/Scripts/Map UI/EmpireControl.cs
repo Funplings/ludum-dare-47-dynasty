@@ -17,11 +17,9 @@ public class EmpireControl : MonoBehaviour
     [SerializeField] private Color overColor;
 
     private int count = 0;
-    private int max = 0;
     private MapManager mapManager;
 
     void Start(){
-        max = GetMapManager().TerritoryCount();
         UpdateText();
     }
 
@@ -32,7 +30,7 @@ public class EmpireControl : MonoBehaviour
     }
 
     public void UpdateText(){
-        counterText.text = string.Format("{0}/{1}", count, GetMapManager().TerritoryCount());
+        counterText.text = string.Format("{0}/{1}", count, Faction.GetPlayer().TerritoryCount());
 
         resultText.text = string.Format("{0}x", TotalCost());
         resultText.color = AbleToPay() ?  Color.black : overColor;
@@ -44,12 +42,7 @@ public class EmpireControl : MonoBehaviour
     }
 
     public void Plus(){
-        count = Mathf.Min(max, count + 1);
-        UpdateText();
-    }
-
-    public void UpdateMax(int newMax){
-        max = newMax;
+        count = Mathf.Min(Faction.GetPlayer().TerritoryCount(), count + 1);
         UpdateText();
     }
 
@@ -57,7 +50,7 @@ public class EmpireControl : MonoBehaviour
         if( !AbleToPay() ) return;
 
         GameState state = GameManager.instance.state;
-        int complement = max - count;
+        int complement = Faction.GetPlayer().TerritoryCount() - count;
 
         if(controlType == CONTROL_TYPE.FEED){
             state.m_Food -= TotalCost();
@@ -66,7 +59,7 @@ public class EmpireControl : MonoBehaviour
         }
         else{
             state.m_Money -= TotalCost();
-            state.m_Happiness +=  Constants.UNINVESTED_HAPPINESS * complement + Constants.INVESTED_HAPPINESS * count;
+            state.m_Happiness +=  Constants.UNINVESTED_HAPPINESS * complement + state.HappinessPerInvest() * count;
         }
         state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
         count = 0;

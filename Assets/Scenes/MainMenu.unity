@@ -763,6 +763,7 @@ MonoBehaviour:
   image: {fileID: 1270442618}
   play: {fileID: 2074360387}
   tutorial: {fileID: 1143030788}
+  colorPickerGroup: {fileID: 1072315798}
   input: {fileID: 1656958469}
   nameWarning: {fileID: 1022933505}
 --- !u!1 &442806202
