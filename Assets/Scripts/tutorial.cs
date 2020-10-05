@@ -35,6 +35,7 @@ public class Tutorial : MonoBehaviour
     }
 
     public void MoveRight(){
+      AudioManager.instance.Play("Select");
       index++;
       if(index == max){
         GameManager.instance.LoadMainMenu();
@@ -44,6 +45,7 @@ public class Tutorial : MonoBehaviour
     }
 
     public void MoveLeft(){
+      AudioManager.instance.Play("Select");
       index = Mathf.Max(0, index - 1);
       UpdatePage();
     }

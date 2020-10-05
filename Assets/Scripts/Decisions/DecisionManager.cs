@@ -44,6 +44,12 @@ public class DecisionManager : MonoBehaviour
     }
 
     public void PeekMap(bool state){
+        if(state){
+            AudioManager.instance.Play("PeekShowMap");
+        }
+        else{
+            AudioManager.instance.Play("PeekHideMap");
+        }
         mainGroup.alpha = state ? 0 : 1;
         showMapButton.alpha = state ? .5f : 1;
     }
@@ -59,12 +65,14 @@ public class DecisionManager : MonoBehaviour
         GameState state = GameManager.instance.state;
 
         if( String.IsNullOrWhiteSpace(inputField.text)){
+            AudioManager.instance.Play("Invalid");
             nameWarning.text = "Please enter a dynasty name!";
             nameWarning.DOKill();
             nameWarning.DOFade(1, .1f).OnComplete(() =>nameWarning.DOFade(0, 1f).SetDelay(.2f));
             return;
         }
         else if(state.CheckForReusedName(inputField.text)) {
+            AudioManager.instance.Play("Invalid");
             nameWarning.text = "Please enter a new dynasty name!";
             nameWarning.DOKill();
             nameWarning.DOFade(1, .1f).OnComplete(() =>nameWarning.DOFade(0, 1f).SetDelay(.2f));
@@ -88,6 +96,7 @@ public class DecisionManager : MonoBehaviour
 
         //Hide self and tell map to start
         ShowSelf(false);
+        AudioManager.instance.Play("GameStart");
         mapManager.StartDynasty();
     }
 
@@ -99,6 +108,9 @@ public class DecisionManager : MonoBehaviour
         else if(perkChoices.Count < labsCount){
             choice.Toggle();
             perkChoices.Add(choice);
+        }
+        else{
+            AudioManager.instance.Play("Invalid");
         }
     }
 }

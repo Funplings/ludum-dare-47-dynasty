@@ -17,7 +17,6 @@ public class MapManager : MonoBehaviour {
 
     // Tile map
     public static TileController[,] m_TileMap;
-    Dictionary<Faction, List<(int, int)>> m_FactionTiles; // Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
     System.Random m_Random;
 
     bool m_Rebelling = false;
@@ -46,13 +45,10 @@ public class MapManager : MonoBehaviour {
         
         List<Faction> startingFactions = GameManager.instance.state.enemyFactions;
 
-        // Instantiate faction hash table
-        m_FactionTiles = new Dictionary<Faction, List<(int, int)>>();
-        m_FactionTiles.Add(Faction.GetPlayer(), new List<(int, int)>());
+        // Instantiate factions
         for (int i = 0; i < Constants.NUM_STARTING_ENEMIES; i++) {
             Faction newFaction = Faction.GenerateFaction();
             startingFactions.Add(newFaction);
-            m_FactionTiles.Add(newFaction, new List<(int, int)>());
         }
 
         // Calculate bottom right starting corner
@@ -121,7 +117,6 @@ public class MapManager : MonoBehaviour {
 
     void SetTileFaction((int, int) position, Faction faction) {
         m_TileMap[position.Item1, position.Item2].SetFaction(faction);
-        m_FactionTiles[faction].Add(position);
     }
 
     
@@ -190,6 +185,7 @@ public class MapManager : MonoBehaviour {
                 return;
             }
 
+            AudioManager.instance.Play("Blip");
             state.m_Soldiers -= cost;
             TileController.GetCurrentTile().AddSoldier(1);
             uiManager.UpdateSoldiersCount();
@@ -212,7 +208,7 @@ public class MapManager : MonoBehaviour {
             case Constants.ON_SALE.FARM:
                 if( !TileController.GetCurrentTile().NewBuildingValid() ){
                     uiManager.Notice("Structures cannot be adjacent or diagonal.");
-                    //play invalid sfx
+                    AudioManager.instance.Play("Invalid");
                     return;
                 }
                 TileController.GetCurrentTile().SetTileType(TileController.TileType.FARM);
@@ -223,7 +219,7 @@ public class MapManager : MonoBehaviour {
             case Constants.ON_SALE.LAB:
                 if( !TileController.GetCurrentTile().NewBuildingValid() ){
                     uiManager.Notice("Structures cannot be adjacent or diagonal.");
-                    //play invalid sfx
+                    AudioManager.instance.Play("Invalid");
                     return;
                 }
                 TileController.GetCurrentTile().SetTileType(TileController.TileType.LAB);
@@ -233,6 +229,7 @@ public class MapManager : MonoBehaviour {
                 break;
         }
 
+        AudioManager.instance.Play("Blip");
         state.m_Money -= cost;
         uiManager.UpdateMoneyCount();
     }

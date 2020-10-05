@@ -49,6 +49,8 @@ public class MainMenu : MonoBehaviour
             return;
         }
 
+        AudioManager.instance.Play("GameStart");
+
         KillTweens();
         GameManager.instance.state.m_EmpireName = input.text;
         Faction playerFaction = new Faction(image.color);
@@ -59,6 +61,8 @@ public class MainMenu : MonoBehaviour
     
     public void PlayTutorial()
     {
+
+        AudioManager.instance.Play("GameStart");
         KillTweens();
         GameManager.instance.LoadTutorial();
     }

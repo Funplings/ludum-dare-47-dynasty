@@ -16,6 +16,7 @@ public class PerkChoice : MonoBehaviour
     }
 
     public void Toggle(){
+        AudioManager.instance.Play("Checkbox");
         status = !status;
         check.enabled = status;
     }

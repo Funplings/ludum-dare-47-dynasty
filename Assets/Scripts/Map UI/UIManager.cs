@@ -124,10 +124,12 @@ public class UIManager : MonoBehaviour
         TileController.OffMode();
         
         if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
+            AudioManager.instance.Play("GameStart");
             ShowMapUI(false, .5f);
             StartCoroutine(PlayRoundCoroutine());
         }
         else{
+            AudioManager.instance.Play("Invalid");
             Notice("Invalid Empire Control!");
         }
     }
@@ -258,9 +260,12 @@ public class UIManager : MonoBehaviour
     public void EndRebellion(){
         //check for territories, if not satisfied return
         if (TileController.GetAbandonedTilesCount() < MapManager.GetAbandonCount()) {
+            AudioManager.instance.Play("Invalid");
             Notice("You haven't abandoned enough tiles!");
             return;
         }
+
+        AudioManager.instance.Play("GameStart");
         TileController.AbandonTiles();
         TileController.SetMode(Constants.DEFAULT_MODE);
 
@@ -273,6 +278,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void Alert(string alert, float alertTime = ALERT_TIME){
+        AudioManager.instance.Play("Blip");
        
         m_alertText.text = alert;
         m_alertText.DOKill(true);

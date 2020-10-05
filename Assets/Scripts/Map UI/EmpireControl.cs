@@ -37,11 +37,13 @@ public class EmpireControl : MonoBehaviour
     }
     
     public void Minus(){
+        AudioManager.instance.Play("Blip");
         count = Mathf.Max(0, count - 1);
         UpdateText();
     }
 
     public void Plus(){
+        AudioManager.instance.Play("Blip");
         count = Mathf.Min(Faction.GetPlayer().TerritoryCount(), count + 1);
         UpdateText();
     }

@@ -235,36 +235,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: {fileID: 8300000, guid: bba0f597fbe40774b91d6d5f137ac3c7, type: 3}
   sfxs:
-  - name: Start
-    volume: 1
-    clip: {fileID: 8300000, guid: 8824be78b8306ce4a92352baa47eabed, type: 3}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
-  - name: 
-    volume: 0
-    clip: {fileID: 0}
+  - name: Abandon
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 03bd40b56fb8c3640bc0535aacfd4c6a, type: 3}
+  - name: Blip
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 5fd079f94ff5a534ba4e59aaf47736f7, type: 3}
+  - name: Cancel
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 3cb1cdfd00ecbef468c84dc537a1c7bb, type: 3}
+  - name: Checkbox
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 66a02198a9bb4a5498c0968a9fdf6293, type: 3}
+  - name: GameStart
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 5086cc688e138c24890cab261b3bf1a1, type: 3}
+  - name: Invalid
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 4aaf6df6b916c124089a239eb36a719d, type: 3}
+  - name: PeekHideMap
+    volume: 0.3
+    clip: {fileID: 8300000, guid: c9e20827c7ef9314dab51c28e7769dc0, type: 3}
+  - name: PeekShowMap
+    volume: 0.3
+    clip: {fileID: 8300000, guid: be900e4b10095a34aaf628698eb105cc, type: 3}
+  - name: Rebellion
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 3d293ab002838b147a9478f979694a04, type: 3}
+  - name: Select
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 689e87761b843d5469e7c6d21bf31feb, type: 3}
 --- !u!82 &3414881465458581045
 AudioSource:
   m_ObjectHideFlags: 0

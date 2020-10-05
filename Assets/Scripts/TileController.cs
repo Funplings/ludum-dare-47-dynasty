@@ -166,6 +166,7 @@ public class TileController: MonoBehaviour
             case Constants.DEFAULT_MODE:
             // If this is a player tile, create tile popup
             if (m_Faction.IsPlayer()) {
+                AudioManager.instance.Play("Blip");
                 CreateTilePopup();
 
                 m_Mode = Constants.SELECTING_MODE;
@@ -175,6 +176,7 @@ public class TileController: MonoBehaviour
             case Constants.SELECTING_MODE:
             // If this is the currently selected tile, deselect
             if (m_CurrSelectedTile == this) {
+                AudioManager.instance.Play("Cancel");
                 ClearTilePopup();
                 ClearSelectedTile();
 
@@ -182,6 +184,7 @@ public class TileController: MonoBehaviour
             }
             // If this is a player tile, deselect the previously selected tile and create tile popup
             else if (m_Faction.IsPlayer()) {
+                AudioManager.instance.Play("Blip");
                 ClearTilePopup();
                 ClearSelectedTile();
 
@@ -191,6 +194,7 @@ public class TileController: MonoBehaviour
             }
             // Otherwise, deselect the currently selected tile
             else {
+                AudioManager.instance.Play("Cancel");
                 ClearTilePopup();
                 ClearSelectedTile();
 
@@ -203,6 +207,7 @@ public class TileController: MonoBehaviour
 
             // If this is an expandable tile, choose this tile to expand to
             if (m_ExpansionOptions.Contains(this)) {
+                AudioManager.instance.Play("Blip");
                 // Handle expansion state for this tile and and the tile that will expand to it
                 expanded = true;
                 m_WillExpand = true;
@@ -252,14 +257,17 @@ public class TileController: MonoBehaviour
             // Handle tile abandoning
             if (!m_AbandonedTiles.Contains(this)) {
                 if (m_AbandonedTiles.Count < MapManager.GetAbandonCount() ) {
+                    AudioManager.instance.Play("Abandon");
                     m_AbandonedTiles.Add(this);
                     m_AbandonMarker = Instantiate(m_AbandonMarkerPrefab, transform);
                 }
                 else {
+                    AudioManager.instance.Play("Invalid");
                     print("Cannot select any more tiles to abandon");
                 }
             }
             else {
+                AudioManager.instance.Play("Cancel");
                 m_AbandonedTiles.Remove(this);
                 Destroy(m_AbandonMarker);
                 m_AbandonMarker = null;
@@ -399,7 +407,9 @@ public class TileController: MonoBehaviour
         }
 
         if(tileSoldiers.GetCount() == 0){
-            //Play invalid sfx
+            UIManager uiManager = FindObjectOfType<UIManager>();
+            uiManager.Notice("You need a soldier to expand your empire!");
+            AudioManager.instance.Play("Invalid");
             return;
         }
 
