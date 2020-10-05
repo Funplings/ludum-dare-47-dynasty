@@ -185,7 +185,10 @@ public class MapManager : MonoBehaviour {
         GameState state = GameManager.instance.state;
 
         if(item == Constants.ON_SALE.PLACE_SOLDIER){
-            if( cost > state.m_Soldiers) return;
+            if( cost > state.m_Soldiers){
+                uiManager.Notice("Not enough soldiers...");
+                return;
+            }
 
             state.m_Soldiers -= cost;
             TileController.GetCurrentTile().AddSoldier(1);
@@ -207,14 +210,22 @@ public class MapManager : MonoBehaviour {
                 uiManager.UpdateSoldiersCount();
                 break;
             case Constants.ON_SALE.FARM:
-                if( !TileController.GetCurrentTile().NewBuildingValid() ) return;
+                if( !TileController.GetCurrentTile().NewBuildingValid() ){
+                    uiManager.Notice("Structures cannot be adjacent or diagonal.");
+                    //play invalid sfx
+                    return;
+                }
                 TileController.GetCurrentTile().SetTileType(TileController.TileType.FARM);
                 TileController.ClearTilePopup();
                 TileController.ClearSelectedTile();
                 uiManager.UpdateFarmCount();
                 break;
             case Constants.ON_SALE.LAB:
-                if( !TileController.GetCurrentTile().NewBuildingValid() ) return;
+                if( !TileController.GetCurrentTile().NewBuildingValid() ){
+                    uiManager.Notice("Structures cannot be adjacent or diagonal.");
+                    //play invalid sfx
+                    return;
+                }
                 TileController.GetCurrentTile().SetTileType(TileController.TileType.LAB);
                 TileController.ClearTilePopup();
                 TileController.ClearSelectedTile();

@@ -7,8 +7,8 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
-    private const int ALERT_TIME = 2;
-    public const int SIEGE_ALERT_TIME = 2;
+    private const int ALERT_TIME = 1;
+    public const int SIEGE_ALERT_TIME = 1;
 
     [Header("UIs")]
     [SerializeField] private CanvasGroup mapUI;

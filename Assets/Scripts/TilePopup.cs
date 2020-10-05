@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TilePopup : MonoBehaviour {
     [SerializeField] Button m_PlaceSoldierButton;
     [SerializeField] Button m_PlaceFarmButton;
     [SerializeField] Button m_PlaceLabButton;
     [SerializeField] Button m_ExpandButton;
-    [SerializeField] Text m_ExpandText;
+    [SerializeField] TMP_Text m_ExpandText;
     TileController m_Tile;
 
     public void SetTile(TileController tile) {
