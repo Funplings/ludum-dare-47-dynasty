@@ -17,11 +17,9 @@ public class EmpireControl : MonoBehaviour
     [SerializeField] private Color overColor;
 
     private int count = 0;
-    private int max = 0;
     private MapManager mapManager;
 
     void Start(){
-        max = Faction.GetPlayer().TerritoryCount();
         UpdateText();
     }
 
@@ -44,12 +42,7 @@ public class EmpireControl : MonoBehaviour
     }
 
     public void Plus(){
-        count = Mathf.Min(max, count + 1);
-        UpdateText();
-    }
-
-    public void UpdateMax(int newMax){
-        max = newMax;
+        count = Mathf.Min(Faction.GetPlayer().TerritoryCount(), count + 1);
         UpdateText();
     }
 
@@ -57,7 +50,7 @@ public class EmpireControl : MonoBehaviour
         if( !AbleToPay() ) return;
 
         GameState state = GameManager.instance.state;
-        int complement = max - count;
+        int complement = Faction.GetPlayer().TerritoryCount() - count;
 
         if(controlType == CONTROL_TYPE.FEED){
             state.m_Food -= TotalCost();

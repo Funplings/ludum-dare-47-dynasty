@@ -7,9 +7,13 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
+    private const int ALERT_TIME = 2;
+    public const int SIEGE_ALERT_TIME = 2;
+
     [Header("UIs")]
     [SerializeField] private CanvasGroup mapUI;
     [SerializeField] private GameObject rebellionUI;
+    [SerializeField] private RandomEventPopup randomEventPopup;
     
     [Header("Info UI")]
     [SerializeField] private CurrencyInfo m_HappinessInfo;
@@ -107,6 +111,7 @@ public class UIManager : MonoBehaviour
     }
 
     private void NextRound(){
+        TileController.DefaultMode();
         UpdateAll();
         GameManager.instance.state.m_turn++;
         ShowMapUI(true, .5f);
@@ -116,6 +121,7 @@ public class UIManager : MonoBehaviour
         TileController.ClearAllExpansionOptions();
         TileController.ClearTilePopup();
         TileController.ClearSelectedTile();
+        TileController.OffMode();
         
         if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
             ShowMapUI(false, .5f);
@@ -136,21 +142,21 @@ public class UIManager : MonoBehaviour
         UpdateHappinessCount();
 
         Alert("Feeding the empire...");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(ALERT_TIME);
 
         m_investControl.Pay();
         UpdateMoneyCount();
         UpdateHappinessCount();
 
         Alert("Managing investments...");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(ALERT_TIME);
 
         int taxes = m_MapManager.CollectTaxes();
         state.m_Money += taxes;
         UpdateMoneyCount();
 
-        Alert("Managing investments...");
-        yield return new WaitForSeconds(1);
+        Alert("Collecting taxes...");
+        yield return new WaitForSeconds(ALERT_TIME);
 
         int harvest = m_MapManager.HarvestFarms();
         if(harvest > 0){
@@ -158,7 +164,7 @@ public class UIManager : MonoBehaviour
             UpdateFoodCount();
 
             Alert("Harvesting farms...");
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(ALERT_TIME);
         }
 
         int mined = m_MapManager.Mine();
@@ -167,7 +173,7 @@ public class UIManager : MonoBehaviour
             UpdateMoneyCount();
 
             Alert("Carving jade...");
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(ALERT_TIME);
         }
 
         yield return StartCoroutine(TileController.ExpandTiles());
@@ -177,7 +183,7 @@ public class UIManager : MonoBehaviour
                 faction.AddSoldier();
             }
             Alert("The enemies have expanded their forces!");
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(ALERT_TIME);
 
             foreach(Faction faction in state.enemyFactions){
                 bool expand = Random.value < Constants.CHANCE_TO_EXPAND;
@@ -186,24 +192,33 @@ public class UIManager : MonoBehaviour
                     int result = faction.MaybeSiege();
                     switch(result){
                         case 0:
-                            Alert("The enemy has expanded their territory!");
+                            Alert("The enemy has expanded their territory!", SIEGE_ALERT_TIME);
                             break;
                         case 1:
-                            Alert("The enemy has taken some of your land!");
+                            Alert("The enemy has taken some of your land!", SIEGE_ALERT_TIME);
                             state.m_Happiness +=  Constants.FAILED_INVADE_HAPPINESS;
                              state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
                             UpdateHappinessCount();
                             break;
                         case 2:
-                            Alert("The enemies fought each other!");
+                            Alert("The enemies fought each other!", SIEGE_ALERT_TIME);
                             break;
                         case 3:
-                            Alert("The enemies failed to expand their land...");
+                            Alert("The enemies failed to expand their land...", SIEGE_ALERT_TIME);
                             break;
                     }
-                    if(result != -1) yield return new WaitForSeconds(2);
+                    if(result != -1) yield return new WaitForSeconds(SIEGE_ALERT_TIME);
                 }
             }
+        }
+
+        //Random Events
+        if(Random.value < Constants.CHANCE_RANDOM_EVENT){
+            RandomEvents.RandomEvent randomEvent = RandomEvents.GetEvent();
+            yield return StartCoroutine(EventPopup(randomEvent.message));
+            randomEvent.eventFunc();
+            Alert(randomEvent.alert);
+            yield return new WaitForSeconds(ALERT_TIME);
         }
 
         if(Faction.GetPlayer().TerritoryCount() == 0){
@@ -218,6 +233,13 @@ public class UIManager : MonoBehaviour
 
         NextRound();
 
+    }
+
+    IEnumerator EventPopup(string message){
+        randomEventPopup.Show(message);
+        while(randomEventPopup.active){
+            yield return null;
+        }
     }
 
     public void StartRebellion(){
@@ -250,12 +272,14 @@ public class UIManager : MonoBehaviour
         m_MapManager.EndDynasty();
     }
 
-    public void Alert(string alert){
+    public void Alert(string alert, float alertTime = ALERT_TIME){
+       
         m_alertText.text = alert;
-        m_alertText.DOComplete();
-        m_alertText.transform.DOComplete();
-        m_alertText.DOFade(1, .5f).OnComplete(() => m_alertText.DOFade(0, .5f));
-        m_alertText.rectTransform.DOAnchorPosY(100, 1).OnComplete(() => m_alertText.rectTransform.anchoredPosition = Vector2.zero);
+        m_alertText.DOKill(true);
+        m_alertText.transform.DOKill(true);
+        m_alertText.rectTransform.DOKill(true);
+        m_alertText.DOFade(1, alertTime/2).OnComplete(() => m_alertText.DOFade(0, alertTime/2));
+        m_alertText.rectTransform.DOAnchorPosY(100, alertTime).OnComplete(() => m_alertText.rectTransform.anchoredPosition = Vector2.zero);
     }
 
     public void Notice(string notice){

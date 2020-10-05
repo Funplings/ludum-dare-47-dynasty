@@ -80,7 +80,7 @@ public class Faction
         tile.AddSoldier(1);
     }
     
-    public T RandomFromList<T>(List<T> list){
+    private T RandomFromList<T>(List<T> list){
         if(list.Count == 0){
             return default(T);
         }
@@ -100,7 +100,7 @@ public class Faction
         TileController tileToExpand = RandomFromList(canExpandTiles);
         TileController expandToTile = RandomFromList(tileToExpand.ExpandOptions());
 
-        if(expandToTile.GetFaction() != Faction.None){
+        if(expandToTile.GetTileType() != TileController.TileType.NONE){
             //Siege
             bool success = Random.value < TileController.InvasionChance(tileToExpand.GetSoldier(), expandToTile.m_ExpandTarget.GetSoldier());
             if(success){
@@ -116,7 +116,7 @@ public class Faction
 
         }
         else{
-            expandToTile.SetFaction(Faction.GetPlayer());
+            expandToTile.SetFaction(tileToExpand.GetFaction());
             expandToTile.SetSoldier(tileToExpand.GetSoldier() - 1);
             tileToExpand.SetSoldier(0);
             return 0;

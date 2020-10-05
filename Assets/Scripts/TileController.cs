@@ -315,7 +315,7 @@ public class TileController: MonoBehaviour
         while (m_ExpandingTiles.Count > 0) {
             TileController tile = m_ExpandingTiles[0];
             
-            if(tile.m_ExpandTarget.GetFaction() != Faction.None){
+            if(tile.m_ExpandTarget.GetTileType() != TileController.TileType.NONE){
                 //Siege
                 bool success = Random.value < InvasionChance(tile.GetSoldier(), tile.m_ExpandTarget.GetSoldier(), true);
                 if(success){
@@ -324,13 +324,13 @@ public class TileController: MonoBehaviour
                     tile.SetSoldier(0);
                     state.m_Happiness +=  Constants.SUCCEED_INVADE_HAPPINESS;
                     state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
-                    uiManager.Alert("Your invasion succeeded!");
+                    uiManager.Alert("Your invasion succeeded!", UIManager.SIEGE_ALERT_TIME);
                 }
                 else{
                     tile.SetSoldier(0);
                     state.m_Happiness +=  Constants.FAILED_INVADE_HAPPINESS;
                     state.m_Happiness = Mathf.Clamp(state.m_Happiness, 0, 100);
-                    uiManager.Alert("Your invasion failed!");
+                    uiManager.Alert("Your invasion failed!", UIManager.SIEGE_ALERT_TIME);
                 }
 
             }
@@ -338,12 +338,12 @@ public class TileController: MonoBehaviour
                 tile.m_ExpandTarget.SetFaction(Faction.GetPlayer());
                 tile.m_ExpandTarget.SetSoldier(tile.GetSoldier() - 1);
                 tile.SetSoldier(0);
-                uiManager.Alert("Your empire has expanded.");
+                uiManager.Alert("Your empire has expanded.", UIManager.SIEGE_ALERT_TIME);
             }
             
             tile.CancelExpansion();
             
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(UIManager.SIEGE_ALERT_TIME);
         }
         
     }
@@ -375,6 +375,14 @@ public class TileController: MonoBehaviour
 
         // Remove self from expansions options list
         m_ExpansionOptions.Remove(this);
+    }
+
+    public static void OffMode(){
+        m_Mode = Constants.OFF_MODE;
+    }
+
+    public static void DefaultMode(){
+        m_Mode = Constants.DEFAULT_MODE;
     }
 
     public void ExpandTile() {
@@ -451,22 +459,22 @@ public class TileController: MonoBehaviour
         // Above
         if (m_YIndex < Constants.NUM_ROWS - 1) {
             TileController aboveTile = MapManager.m_TileMap[m_XIndex, m_YIndex + 1];
-            options.Add(aboveTile);
+            if(aboveTile.GetFaction() != m_Faction) options.Add(aboveTile);
         }
         // Below
         if (m_YIndex > 0) {
             TileController belowTile = MapManager.m_TileMap[m_XIndex, m_YIndex - 1];
-            options.Add(belowTile);
+            if(belowTile.GetFaction() != m_Faction) options.Add(belowTile);
         }
         // Left
         if (m_XIndex > 0) {
             TileController leftTile = MapManager.m_TileMap[m_XIndex - 1, m_YIndex];
-            options.Add(leftTile);
+            if(leftTile.GetFaction() != m_Faction) options.Add(leftTile);
         }
         // Right
         if (m_XIndex < Constants.NUM_COLS - 1) {
             TileController rightTile = MapManager.m_TileMap[m_XIndex + 1, m_YIndex];
-            options.Add(rightTile);
+            if(rightTile.GetFaction() != m_Faction) options.Add(rightTile);
         }
 
         return options;

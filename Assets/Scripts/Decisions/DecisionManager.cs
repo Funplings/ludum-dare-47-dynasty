@@ -32,7 +32,7 @@ public class DecisionManager : MonoBehaviour
         GameState state = GameManager.instance.state;
                 
         //update lab count
-        labsCount = Faction.GetPlayer().TerritoryCount();
+        labsCount = Faction.GetPlayer().LabCount();
         labOwnedCount.text = "Universities Owned (Perk Count): " + labsCount.ToString();
 
         //set dynasty number

@@ -20,6 +20,8 @@ public static class Constants {
 
     public const int YEARS_PER_TURN = 25;
 
+    public const float CHANCE_RANDOM_EVENT = 1;
+
     #region Rebellion
     public const float PERCENT_FOOD_LOST = .25f;
     public const float PERCENT_SOLDIER_LOST = .25f;
@@ -64,5 +66,6 @@ public static class Constants {
     public const int SELECTING_MODE = 1;
     public const int EXPANDING_MODE = 2;
     public const int ABANDONING_MODE = 3;
+    public const int OFF_MODE = 4;
     #endregion
 }

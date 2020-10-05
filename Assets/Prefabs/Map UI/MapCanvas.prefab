@@ -720,6 +720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapUI: {fileID: 5609583530409745678}
   rebellionUI: {fileID: 2174979595843490217}
+  randomEventPopup: {fileID: 0}
   m_HappinessInfo: {fileID: 1491413710184872615}
   m_MoneyInfo: {fileID: 6023828218008052159}
   m_FoodInfo: {fileID: 3457817215746469577}

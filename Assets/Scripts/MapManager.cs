@@ -98,8 +98,17 @@ public class MapManager : MonoBehaviour {
         }
     }
 
+    public bool TryRandomSpawnFaction(Faction faction){
+        (int, int) pos = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
+        if (m_TileMap[pos.Item1, pos.Item2].GetFaction() == Faction.None) {
+            m_TileMap[pos.Item1, pos.Item2].SetFaction(faction);
+            return true;
+        }
+        return false;
+    }
+
     //Return success or failure
-    bool RandomSpawnMine(bool repeatUntilSuccess = false){
+    public bool RandomSpawnMine(bool repeatUntilSuccess = false){
         do {
             (int, int) pos = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
             if (m_TileMap[pos.Item1, pos.Item2].NewBuildingValid()) {
