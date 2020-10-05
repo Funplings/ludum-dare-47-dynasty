@@ -195,7 +195,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!114 &971706761943793375
 MonoBehaviour:
@@ -2963,6 +2963,23 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bfb3ddfa45ec83f429b3032c6814ea98,
+        type: 3}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193388679295449374, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2a3861b053e25f949a772c8d9bec2e75,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5160554b775fe014282105ea7e368a70, type: 3}
 --- !u!224 &53081606394784225 stripped
@@ -3609,6 +3626,23 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bfb3ddfa45ec83f429b3032c6814ea98,
+        type: 3}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193388679295449374, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cabef8d4a35354648aaa78538a0607bd,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5160554b775fe014282105ea7e368a70, type: 3}
 --- !u!224 &5469072328088113276 stripped

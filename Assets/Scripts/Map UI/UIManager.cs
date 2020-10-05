@@ -32,6 +32,8 @@ public class UIManager : MonoBehaviour
     private RebellionManager m_rebellion;
     private Animator animator;
 
+
+
     void Start(){
         animator = GetComponent<Animator>();
         m_rebellion = GetComponent<RebellionManager>();
@@ -70,15 +72,15 @@ public class UIManager : MonoBehaviour
     }
 
     public void UpdateTerritoryCount() {
-        m_TerritoryText.text = string.Format("Territories Owned: {0}", m_MapManager.TerritoryCount());
+        m_TerritoryText.text = string.Format("Territories Owned: {0}", Faction.GetPlayer().TerritoryCount());
     }
 
     public void UpdateFarmCount() {
-        m_FarmText.text = string.Format("Farms Owned: {0}", m_MapManager.FarmsCount());
+        m_FarmText.text = string.Format("Farms Owned: {0}", Faction.GetPlayer().FarmCount());
     }
 
     public void UpdateLabCount() {
-        m_LabText.text = string.Format("Labs Owned: {0}", m_MapManager.LabsCount());
+        m_LabText.text = string.Format("Labs Owned: {0}", Faction.GetPlayer().LabCount());
 
     }
     
@@ -118,6 +120,11 @@ public class UIManager : MonoBehaviour
 
     //Animation Event
     public void SwitchToRebellion(){
+        //TODO fix abandoncount
+        //Lose food
+        //Lose soldiers
+        //Remove soldiers
+
         ShowMapUI(false);
         ShowRebellionUI(true);
         m_MapManager.SetRebelling(true);
@@ -125,7 +132,7 @@ public class UIManager : MonoBehaviour
 
     public void EndRebellion(){
         //check for territories, if not satisfied return
-        if (TileController.GetAbandonedTilesCount() < Constants.REBELLION_TILE_LOSS) {
+        if (TileController.GetAbandonedTilesCount() < MapManager.GetAbandonCount()) {
             return;
         }
         TileController.AbandonTiles();

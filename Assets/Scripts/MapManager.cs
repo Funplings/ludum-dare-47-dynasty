@@ -9,7 +9,6 @@ public class MapManager : MonoBehaviour {
     [SerializeField] GameObject m_TilePrefab;
     [SerializeField] int m_TileSize;
     [SerializeField] Vector3 m_MapCenter;
-    [SerializeField] int m_NumEnemyFactions;
     [SerializeField] Canvas m_PopupCanvas;
     [SerializeField] UIManager uiManager;
     [SerializeField] DecisionManager decisionManager;
@@ -18,10 +17,17 @@ public class MapManager : MonoBehaviour {
 
     // Tile map
     public static TileController[,] m_TileMap;
-    Dictionary<int, List<(int, int)>> m_FactionTiles; // Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
+    Dictionary<Faction, List<(int, int)>> m_FactionTiles; // Maps faction indexes to a list of (int, int) tuples indicating the tiles that belong to that faction (-2 is player)
     System.Random m_Random;
 
     bool m_Rebelling = false;
+
+    #region Rebellion
+
+    private static int abandonCount;
+    public static int GetAbandonCount() { return abandonCount; }
+
+    #endregion
 
     void Awake() {
         m_StaticPopupCanvas = m_PopupCanvas;
@@ -36,11 +42,17 @@ public class MapManager : MonoBehaviour {
         // Instantiate tile map
         m_TileMap = new TileController[Constants.NUM_ROWS, Constants.NUM_COLS];
 
+        // Create starting enemies
+        
+        List<Faction> startingFactions = GameManager.instance.state.enemyFactions;
+
         // Instantiate faction hash table
-        m_FactionTiles = new Dictionary<int, List<(int, int)>>();
-        m_FactionTiles.Add(Constants.PLAYER_FACTION_INDEX, new List<(int, int)>());
-        for (int i = 0; i < m_NumEnemyFactions; i++) {
-            m_FactionTiles.Add(i, new List<(int, int)>());
+        m_FactionTiles = new Dictionary<Faction, List<(int, int)>>();
+        m_FactionTiles.Add(Faction.GetPlayer(), new List<(int, int)>());
+        for (int i = 0; i < Constants.NUM_STARTING_ENEMIES; i++) {
+            Faction newFaction = Faction.GenerateFaction();
+            startingFactions.Add(newFaction);
+            m_FactionTiles.Add(newFaction, new List<(int, int)>());
         }
 
         // Calculate bottom right starting corner
@@ -62,22 +74,27 @@ public class MapManager : MonoBehaviour {
 
         // Instantiate player faction
         (int, int) playerFactionPosition = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
-        SetTileFaction(playerFactionPosition, Constants.PLAYER_FACTION_INDEX);
+        SetTileFaction(playerFactionPosition, Faction.GetPlayer());
 
         // Instantiate enemy factions
-        for (int i = 0; i < m_NumEnemyFactions; i++) {
-            bool instantiated = false;
-            while (!instantiated) {
-                (int, int) pos = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
-                if (m_TileMap[pos.Item1, pos.Item2].GetFaction() == Constants.NO_FACTION_INDEX) {
-                    SetTileFaction(pos, i);
-                    instantiated = true;
-                }
+        for (int i = 0; i < Constants.NUM_STARTING_ENEMIES; i++) {
+            RandomSpawnFaction(startingFactions[i]);
+            
+        }
+    }
+
+    void RandomSpawnFaction(Faction faction){
+        bool instantiated = false;
+        while (!instantiated) {
+            (int, int) pos = (m_Random.Next(Constants.NUM_ROWS), m_Random.Next(Constants.NUM_COLS));
+            if (m_TileMap[pos.Item1, pos.Item2].GetFaction() == Faction.None) {
+                SetTileFaction(pos, faction);
+                instantiated = true;
             }
         }
     }
 
-    void SetTileFaction((int, int) position, int faction) {
+    void SetTileFaction((int, int) position, Faction faction) {
         m_TileMap[position.Item1, position.Item2].SetFaction(faction);
         m_FactionTiles[faction].Add(position);
     }
@@ -98,35 +115,6 @@ public class MapManager : MonoBehaviour {
     }
 
     #region Getters and Setters
-    public int LabsCount(){
-        int count = 0;
-        foreach(TileController tile in m_TileMap){
-            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.LAB){
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public int FarmsCount(){
-        int count = 0;
-        foreach(TileController tile in m_TileMap){
-            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX && tile.GetTileType() == TileController.TileType.FARM){
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public int TerritoryCount(){
-        int count = 0;
-        foreach(TileController tile in m_TileMap){
-            if(tile.GetFaction() == Constants.PLAYER_FACTION_INDEX){
-                count++;
-            }
-        }
-        return count;
-    }
 
     public bool GetRebelling() {
         return m_Rebelling;

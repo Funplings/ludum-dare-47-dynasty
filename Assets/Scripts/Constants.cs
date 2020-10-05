@@ -13,11 +13,9 @@ public static class Constants {
 
     public const int STARTING_MONEY = 100;
     public const int GRID_SIZE = 4;
-    public const int PLAYER_FACTION_INDEX = -1;
-    public const int NO_FACTION_INDEX = -2;
     public const int NUM_ROWS = 10;
     public const int NUM_COLS = 10;
-    public const int REBELLION_TILE_LOSS = 2;
+    public const int NUM_STARTING_ENEMIES = 2;
 
     #region Turn Variables
     public const int STARVING_HAPPINESS = -10;

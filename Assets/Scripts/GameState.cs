@@ -13,13 +13,13 @@ public class GameState
     }
 
     public string m_EmpireName;
-    public Color m_playerColor;
     public int m_Happiness = 50;
     public int m_Money = Constants.STARTING_MONEY;
     public int m_Food = 0;
     public int m_Soldiers = 0;
     public int m_turn = 0;
     public Dynasty m_currentDynasty = null;
+    public List<Faction> enemyFactions = new List<Faction>();
     public List<Dynasty> m_allDynasties = new List<Dynasty>(); 
     public HashSet<Perk> m_perks = new HashSet<Perk>();
 

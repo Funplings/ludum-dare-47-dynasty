@@ -21,7 +21,7 @@ public class EmpireControl : MonoBehaviour
     private MapManager mapManager;
 
     void Start(){
-        max = GetMapManager().TerritoryCount();
+        max = Faction.GetPlayer().TerritoryCount();
         UpdateText();
     }
 
@@ -32,7 +32,7 @@ public class EmpireControl : MonoBehaviour
     }
 
     public void UpdateText(){
-        counterText.text = string.Format("{0}/{1}", count, GetMapManager().TerritoryCount());
+        counterText.text = string.Format("{0}/{1}", count, Faction.GetPlayer().TerritoryCount());
 
         resultText.text = string.Format("{0}x", TotalCost());
         resultText.color = AbleToPay() ?  Color.black : overColor;

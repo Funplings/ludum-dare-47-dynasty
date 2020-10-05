@@ -22,14 +22,6 @@ public class TileController: MonoBehaviour
     static List<TileController> m_AbandonedTiles = new List<TileController>();
     static List<TileController> m_ExpandingTiles = new List<TileController>();
 
-    // Faction colors
-    static Color m_NoFactionColor = new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f);
-    static Color m_PlayerColor = new Color(0.8301887f, 0.3217136f, 0.1762193f, 1f); // Can remove once custom player color is implemented
-    static Color[] m_EnemyFactionColors = {
-        new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f),
-        new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f),
-        new Color(0.7094289f, 0.7830189f, 0.2548505f, 1f)
-    };
     #endregion
 
     #region Prefab variables
@@ -44,8 +36,8 @@ public class TileController: MonoBehaviour
     // Position
     int m_XIndex;
     int m_YIndex;
-    TileType m_TileType; // 0 = None, 1 = Farm, 2 = Lab, 3 = Mine
-    int m_Faction; // -1 = Player faction; -2 = no faction
+    TileType m_TileType; 
+    Faction m_Faction = Faction.None;
     public bool m_WillExpand;
     public TileController m_ExpandTarget;
     GameObject m_CurrSoldier;
@@ -69,29 +61,16 @@ public class TileController: MonoBehaviour
         m_XIndex = xIndex;
         m_YIndex = yIndex;
         m_TileType = tileType;
-        SetFaction(Constants.NO_FACTION_INDEX);
+        SetFaction(Faction.None);
     }
 
-    public void SetFaction(int faction) {
-        // Error checking: setting an invalid faction index
-        if (faction < Constants.NO_FACTION_INDEX || faction >= m_EnemyFactionColors.Length) {
-            print(string.Format("CANNOT SET TILE AS FACTION {0}", faction));
-        }
-
+    public void SetFaction(Faction faction) {
         // Set faction
         m_Faction = faction;
-
-        // Set tile sprite
-        if (faction == Constants.NO_FACTION_INDEX) {
-            m_SpriteRenderer.color = m_NoFactionColor;
-        } else if (faction == Constants.PLAYER_FACTION_INDEX) {
-            m_SpriteRenderer.color = m_PlayerColor;
-        } else {
-            m_SpriteRenderer.color = m_EnemyFactionColors[faction];
-        }
+        m_SpriteRenderer.color = faction.m_Color;
     }
 
-    public int GetFaction() {
+    public Faction GetFaction() {
         return m_Faction;
     }
 
@@ -110,7 +89,7 @@ public class TileController: MonoBehaviour
         switch (m_Mode) {
             case Constants.DEFAULT_MODE:
             // If this is a player tile, create tile popup
-            if (m_Faction == Constants.PLAYER_FACTION_INDEX) {
+            if (m_Faction.IsPlayer()) {
                 CreateTilePopup();
 
                 m_Mode = Constants.SELECTING_MODE;
@@ -126,7 +105,7 @@ public class TileController: MonoBehaviour
                 m_Mode = Constants.DEFAULT_MODE;
             }
             // If this is a player tile, deselect the previously selected tile and create tile popup
-            else if (m_Faction == Constants.PLAYER_FACTION_INDEX) {
+            else if (m_Faction.IsPlayer()) {
                 ClearTilePopup();
                 ClearSelectedTile();
 
@@ -153,6 +132,8 @@ public class TileController: MonoBehaviour
                 m_WillExpand = true;
                 m_CurrSelectedTile.m_ExpandTarget = this;
                 m_ExpandingTiles.Add(m_CurrSelectedTile);
+                Destroy(m_ExpansionIcon);
+                m_ExpansionIcon = null;
 
                 // Create arrow
                 GameObject arrow = Instantiate(m_ExpandArrowPrefab, m_CurrSelectedTile.transform);
@@ -181,11 +162,6 @@ public class TileController: MonoBehaviour
                 m_ExpansionOptions[0].ClearExpansionOption();
             }
 
-            // / But keep if this tile was expanded too, keep the cover
-            if (expanded) {
-                m_ExpansionIcon = Instantiate(m_ExpansionIcon, transform);
-            }
-
             // Clear the selected tile
             ClearSelectedTile();
 
@@ -196,13 +172,13 @@ public class TileController: MonoBehaviour
 
             case Constants.ABANDONING_MODE:
             // Cannot lose a non-player faction tile
-            if (m_Faction != Constants.PLAYER_FACTION_INDEX) {
+            if ( !m_Faction.IsPlayer() ) {
                 break;
             }
 
             // Handle tile abandoning
             if (!m_AbandonedTiles.Contains(this)) {
-                if (m_AbandonedTiles.Count < Constants.REBELLION_TILE_LOSS) {
+                if (m_AbandonedTiles.Count < MapManager.GetAbandonCount() ) {
                     m_AbandonedTiles.Add(this);
                     m_AbandonMarker = Instantiate(m_AbandonMarkerPrefab, transform);
                 }
@@ -269,7 +245,7 @@ public class TileController: MonoBehaviour
     public static void ExpandTiles() {
         while (m_ExpandingTiles.Count > 0) {
             TileController tile = m_ExpandingTiles[0];
-            tile.m_ExpandTarget.SetFaction(Constants.PLAYER_FACTION_INDEX);
+            tile.m_ExpandTarget.SetFaction(Faction.GetPlayer());
             tile.CancelExpansion();
         }
     }
@@ -279,17 +255,16 @@ public class TileController: MonoBehaviour
         m_ExpansionIcon = Instantiate(m_ExpansionIconPrefab, transform);
 
         // Expansion cover should be a semi-transparent version of the player faction color
-        m_ExpansionIcon.GetComponent<SpriteRenderer>().color = new Color(m_PlayerColor.r, m_PlayerColor.g, m_PlayerColor.b, 0.5f);
+        m_ExpansionIcon.GetComponent<SpriteRenderer>().color = Color.red;
 
         // Add self to expansion options list
         m_ExpansionOptions.Add(this);
     }
 
     public void ClearExpansionOption() {
-        print(m_ExpansionIcon);
-
         // Remove expansion cover
         Destroy(m_ExpansionIcon);
+        m_ExpansionIcon = null;
 
         // Remove self from expansions options list
         m_ExpansionOptions.Remove(this);
@@ -311,28 +286,28 @@ public class TileController: MonoBehaviour
         // Above
         if (m_YIndex < Constants.NUM_ROWS - 1) {
             TileController aboveTile = MapManager.m_TileMap[m_XIndex, m_YIndex + 1];
-            if (aboveTile.GetFaction() == Constants.NO_FACTION_INDEX && !aboveTile.m_WillExpand) {
+            if (aboveTile.GetFaction() == Faction.None && !aboveTile.m_WillExpand) {
                 aboveTile.SetExpansionOption();
             }
         }
         // Below
         if (m_YIndex > 0) {
             TileController belowTile = MapManager.m_TileMap[m_XIndex, m_YIndex - 1];
-            if (belowTile.GetFaction() == Constants.NO_FACTION_INDEX && !belowTile.m_WillExpand) {
+            if (belowTile.GetFaction() == Faction.None && !belowTile.m_WillExpand) {
                 belowTile.SetExpansionOption();
             }
         }
         // Left
         if (m_XIndex > 0) {
             TileController leftTile = MapManager.m_TileMap[m_XIndex - 1, m_YIndex];
-            if (leftTile.GetFaction() == Constants.NO_FACTION_INDEX && !leftTile.m_WillExpand) {
+            if (leftTile.GetFaction() == Faction.None && !leftTile.m_WillExpand) {
                 leftTile.SetExpansionOption();
             }
         }
         // Right
         if (m_XIndex < Constants.NUM_COLS - 1) {
             TileController rightTile = MapManager.m_TileMap[m_XIndex + 1, m_YIndex];
-            if (rightTile.GetFaction() == Constants.NO_FACTION_INDEX && !rightTile.m_WillExpand) {
+            if (rightTile.GetFaction() == Faction.None && !rightTile.m_WillExpand) {
                 rightTile.SetExpansionOption();
             }
         }
@@ -363,7 +338,7 @@ public class TileController: MonoBehaviour
     public static void AbandonTiles() {
         while (m_AbandonedTiles.Count > 0) {
             TileController tile = m_AbandonedTiles[0];
-            tile.SetFaction(Constants.NO_FACTION_INDEX);
+            tile.SetFaction(Faction.None);
             tile.FinishAbandoning();
         }
     }

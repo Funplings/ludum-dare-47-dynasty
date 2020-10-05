@@ -56,7 +56,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!1 &1289115826820504068
 GameObject:
@@ -3524,6 +3524,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8834870474925045415, guid: d07203ffd3dce4f4881f98c2c9081486,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2a3861b053e25f949a772c8d9bec2e75,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d07203ffd3dce4f4881f98c2c9081486, type: 3}
 --- !u!114 &3457817215746469577 stripped
@@ -3551,6 +3557,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2174979595074452251}
     m_Modifications:
+    - target: {fileID: 861838509357505315, guid: 9d85a201bf262334fbf72f813f29c32c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2a3861b053e25f949a772c8d9bec2e75,
+        type: 3}
     - target: {fileID: 7132978963942659295, guid: 9d85a201bf262334fbf72f813f29c32c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3813,6 +3825,23 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bfb3ddfa45ec83f429b3032c6814ea98,
+        type: 3}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193388679295449374, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2a3861b053e25f949a772c8d9bec2e75,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5160554b775fe014282105ea7e368a70, type: 3}
 --- !u!224 &876863588539781098 stripped
@@ -3938,6 +3967,23 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bfb3ddfa45ec83f429b3032c6814ea98,
+        type: 3}
+    - target: {fileID: 2735397245258868349, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193388679295449374, guid: 5160554b775fe014282105ea7e368a70,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cabef8d4a35354648aaa78538a0607bd,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5160554b775fe014282105ea7e368a70, type: 3}
 --- !u!224 &876863587808846998 stripped
@@ -3958,6 +4004,12 @@ PrefabInstance:
       propertyPath: controlType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 861838509357505315, guid: 9d85a201bf262334fbf72f813f29c32c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bfb3ddfa45ec83f429b3032c6814ea98,
+        type: 3}
     - target: {fileID: 5392315162904346762, guid: 9d85a201bf262334fbf72f813f29c32c,
         type: 3}
       propertyPath: m_text
@@ -4230,6 +4282,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8834870474925045415, guid: d07203ffd3dce4f4881f98c2c9081486,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cabef8d4a35354648aaa78538a0607bd,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d07203ffd3dce4f4881f98c2c9081486, type: 3}
 --- !u!114 &265271797963365092 stripped
@@ -4372,6 +4430,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8834870474925045415, guid: d07203ffd3dce4f4881f98c2c9081486,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 48362e7aeeccddf4390c77f7572f915c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d07203ffd3dce4f4881f98c2c9081486, type: 3}
 --- !u!224 &4844666861869079318 stripped
@@ -4514,6 +4578,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8834870474925045415, guid: d07203ffd3dce4f4881f98c2c9081486,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bfb3ddfa45ec83f429b3032c6814ea98,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d07203ffd3dce4f4881f98c2c9081486, type: 3}
 --- !u!114 &6023828218008052159 stripped

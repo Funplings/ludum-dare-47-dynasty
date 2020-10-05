@@ -51,7 +51,8 @@ public class MainMenu : MonoBehaviour
 
         KillTweens();
         GameManager.instance.state.m_EmpireName = input.text;
-        GameManager.instance.state.m_playerColor = image.color;
+        Faction playerFaction = new Faction(image.color);
+        playerFaction.SetAsPlayer();
         GameManager.instance.LoadGame();
         
     }
