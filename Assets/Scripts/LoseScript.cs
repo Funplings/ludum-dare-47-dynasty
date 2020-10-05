@@ -6,7 +6,7 @@ public class LoseScript : MonoBehaviour
 {
     public void Start()
     {
-        foreach(Dynasty dynasty in GameManager.instance.state.allDynasties)
+        foreach(Dynasty dynasty in GameManager.instance.state.m_allDynasties)
         {
 
         }
