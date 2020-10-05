@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private RectTransform play;
     [SerializeField] private RectTransform tutorial;
+    [SerializeField] private RectTransform colorPickerGroup;
     [SerializeField] private TMP_InputField input;
     [SerializeField] private TMP_Text nameWarning;
 
@@ -29,8 +30,15 @@ public class MainMenu : MonoBehaviour
         this.b = 0;
         image.color = new Color(r, g, b);
 
-        tutorial.DOAnchorPosX(100, .5f).From();
-        play.DOAnchorPosX(100, .5f).From();
+        tutorial.DOAnchorPosX(500, 1f).From();
+        play.DOAnchorPosX(500, 1f).From();
+        colorPickerGroup.DOAnchorPosX(-500, 1f).From();
+    }
+
+    private void KillTweens(){
+        tutorial.DOKill();
+        play.DOKill();
+        colorPickerGroup.DOKill();
     }
 
     public void PlayGame() {
@@ -41,6 +49,7 @@ public class MainMenu : MonoBehaviour
             return;
         }
 
+        KillTweens();
         GameManager.instance.state.m_EmpireName = input.text;
         GameManager.instance.state.m_playerColor = image.color;
         GameManager.instance.LoadGame();
@@ -49,6 +58,7 @@ public class MainMenu : MonoBehaviour
     
     public void PlayTutorial()
     {
+        KillTweens();
         GameManager.instance.LoadTutorial();
     }
     

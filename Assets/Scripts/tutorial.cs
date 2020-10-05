@@ -49,6 +49,7 @@ public class Tutorial : MonoBehaviour
     }
 
     private void UpdatePage(){
+      if(index >= max) return;
       background.sprite = slides[index];
       pageNumber.text = string.Format("{0}/{1}", index + 1, max);
     }

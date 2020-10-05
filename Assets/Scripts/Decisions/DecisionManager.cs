@@ -14,6 +14,7 @@ public class DecisionManager : MonoBehaviour
     [SerializeField] private CanvasGroup showMapButton; 
     [SerializeField] private CanvasGroup mainGroup; 
     [SerializeField] private TMP_Text nameWarning; 
+    [SerializeField] private TMP_Text empireName; 
     [SerializeField] private MapManager mapManager; 
     private CanvasGroup decisionCanvas;
     
@@ -22,6 +23,7 @@ public class DecisionManager : MonoBehaviour
 
     void Start(){
         decisionCanvas = GetComponent<CanvasGroup>();
+        empireName.text = String.Format("The <i>{0}</i> Empire", GameManager.instance.state.m_EmpireName);
         SetupDecision();
     }
 

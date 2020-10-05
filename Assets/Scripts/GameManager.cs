@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
 
     public GameState state = new GameState();
 
+    private string SceneToLoad;
+    private Animator animator;
+
     private void Awake(){
         if(instance == null){
             instance = this;
@@ -18,6 +21,10 @@ public class GameManager : MonoBehaviour
         }
         //Want this to persist throughout the game
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start(){
+        animator = GetComponent<Animator>();
     }
 
     #region Events for scenes
@@ -41,24 +48,34 @@ public class GameManager : MonoBehaviour
 
     #region Scene Load Functions
 
+    //Animation Event
+    public void LoadScene(){
+        SceneManager.LoadScene(SceneToLoad);
+    }
+
     public void LoadMainMenu(){
-        SceneManager.LoadScene(MAIN_MENU_SCENE);
+        SceneToLoad = MAIN_MENU_SCENE;
+        animator.SetTrigger("SwitchScene");
     }
 
     public void LoadGame(){
-        SceneManager.LoadScene(GAME_SCENE);
+        SceneToLoad = GAME_SCENE;
+        animator.SetTrigger("SwitchScene");
     }
 
     public void LoadWin(){
-        SceneManager.LoadScene(WIN_SCENE);
+        SceneToLoad = WIN_SCENE;
+        animator.SetTrigger("SwitchScene");
     }
 
     public void LoadLose(){
-        SceneManager.LoadScene(LOSE_SCENE);
+        SceneToLoad = LOSE_SCENE;
+        animator.SetTrigger("SwitchScene");
     }
 
     public void LoadTutorial(){
-        SceneManager.LoadScene(TUTORIAL_SCENE);
+        SceneToLoad = TUTORIAL_SCENE;
+        animator.SetTrigger("SwitchScene");
     }
 
     public void Exit(){

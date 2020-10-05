@@ -359,7 +359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 70.8, y: 0}
+  m_AnchoredPosition: {x: 70.799805, y: 0}
   m_SizeDelta: {x: 160, y: 135.25}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &684395697
@@ -955,7 +955,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -70.8, y: 0}
+  m_AnchoredPosition: {x: -70.799805, y: 0}
   m_SizeDelta: {x: 160, y: 135.25}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1423478329
@@ -1180,7 +1180,8 @@ MonoBehaviour:
   slides:
   - {fileID: 21300000, guid: 2e542b14af11443d987d22129d9a717a, type: 3}
   - {fileID: 21300000, guid: 5f4756e7b2f13490b8f3d6c8fc2ce936, type: 3}
-  - {fileID: 21300000, guid: a7effac837d974810a011a9e13b2f3bf, type: 3}
+  - {fileID: 21300000, guid: 10ca020b4ea7c4fbc9db039e6252d02c, type: 3}
+  - {fileID: 21300000, guid: 418cdf0d471a3405bac8a646212da6c8, type: 3}
   pageNumber: {fileID: 2129042728}
 --- !u!114 &1976382140
 MonoBehaviour:
@@ -1204,7 +1205,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
