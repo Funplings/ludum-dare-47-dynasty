@@ -26,36 +26,31 @@ public class ListGenerator : MonoBehaviour
         {
             GameObject DynastyInfo = Instantiate(DynastyInfoTemplate) as GameObject;
             DynastyInfo.SetActive(true);
-            DynastyInfo.GetComponent<DynastyListElement>().SetText("Dynasty Name:" + names[i]);
+            DynastyInfo.GetComponent<DynastyListElement>().SetText("Dynasty Name: " + names[i] + "\n" + "Turns Lasted: " + durations[i]);
             DynastyInfo.transform.SetParent(DynastyInfoTemplate.transform.parent, false);
         }
+    }
+    public void CreateTestDynasties()
+    {
+        Dynasty newtestdynasty = new Dynasty("Jerry", 0, 7);
+        GameManager.instance.state.m_allDynasties.Add(newtestdynasty);
+        Dynasty newtestdynasty1 = new Dynasty("Imon", 0, 3);
+        GameManager.instance.state.m_allDynasties.Add(newtestdynasty1);
+        Dynasty newtestdynasty2 = new Dynasty("Ansa", 0, 5);
+        GameManager.instance.state.m_allDynasties.Add(newtestdynasty2);
+        Dynasty newtestdynasty3 = new Dynasty("Matthew", 0, 23);
+        GameManager.instance.state.m_allDynasties.Add(newtestdynasty3);
+        Dynasty newtestdynasty4 = new Dynasty("Aryaman", 3, 4);
+        GameManager.instance.state.m_allDynasties.Add(newtestdynasty4);
+        Dynasty newtestdynasty5 = new Dynasty("Krischan", 0, 7);
+        GameManager.instance.state.m_allDynasties.Add(newtestdynasty5);
     }
 
     void Start()
     {
-        Dynasty newtestdynasty = new Dynasty("jerry", 0, 3);
-        GameManager.instance.state.m_allDynasties.Add(newtestdynasty);
-        Dynasty newtestdynasty1 = new Dynasty("imon", 0, 3);
-        GameManager.instance.state.m_allDynasties.Add(newtestdynasty1);
-        Dynasty newtestdynasty2 = new Dynasty("ansa", 0, 3);
-        GameManager.instance.state.m_allDynasties.Add(newtestdynasty2);
-        Dynasty newtestdynasty3 = new Dynasty("matthew", 0, 3);
-        GameManager.instance.state.m_allDynasties.Add(newtestdynasty3);
-        int length = GameManager.instance.state.m_allDynasties.Count;
-        names = new string[length];
-        durations = new int[length];
-        for (int i = 0; i < length; i++)
-        {
-            names[i] = GameManager.instance.state.m_allDynasties[i].GetName();
-            durations[i] = GameManager.instance.state.m_allDynasties[i].GetDuration();
-        }
-        for (int i = 0; i < names.Length; i++)
-        {
-            GameObject DynastyInfo = Instantiate(DynastyInfoTemplate) as GameObject;
-            DynastyInfo.SetActive(true);
-            DynastyInfo.GetComponent<DynastyListElement>().SetText("Dynasty Name:" + names[i]);
-            DynastyInfo.transform.SetParent(DynastyInfoTemplate.transform.parent, false);
-        }
+        //CreateTestDynasties();
+        StoreDynastyData();
+        CreateDynastyObj();
     }
 
     // Update is called once per frame
