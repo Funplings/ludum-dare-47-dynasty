@@ -125,6 +125,7 @@ public class MapManager : MonoBehaviour {
     }
 
     public void EndDynasty(){
+        GameManager.instance.state.m_currentDynasty.turnEnded = GameManager.instance.state.m_turn;
         GameManager.instance.state.m_Happiness = 50;
         uiManager.UpdateHappinessCount();
         decisionManager.SetupDecision();
@@ -143,6 +144,26 @@ public class MapManager : MonoBehaviour {
             TileController.SetMode(Constants.ABANDONING_MODE);
         }
 
+    }
+
+    #endregion
+
+    #region Rebellion
+
+    public void StartRebellion(){
+        GameState state = GameManager.instance.state;
+        abandonCount = Mathf.Max(1, Mathf.FloorToInt(Constants.PERCENT_TERRITORY_LOST * Faction.GetPlayer().TerritoryCount()) );
+
+        int foodLost = Mathf.FloorToInt(Constants.PERCENT_FOOD_LOST * state.m_Food);
+        state.m_Food -= foodLost;
+        uiManager.UpdateFoodCount();
+
+        int soldiersLost = Mathf.FloorToInt(Constants.PERCENT_SOLDIER_LOST * state.m_Soldiers);
+        state.m_Soldiers -= soldiersLost;
+        uiManager.UpdateSoldiersCount();
+
+        Faction.GetPlayer().RemoveAllSoldiers();
+        uiManager.UpdateRebellion(foodLost, soldiersLost, abandonCount);
     }
 
     #endregion

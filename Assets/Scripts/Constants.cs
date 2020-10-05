@@ -18,6 +18,18 @@ public static class Constants {
     public const int NUM_STARTING_ENEMIES = 2;
     public const int NUM_STARTING_MINES = 3;
 
+    public const int YEARS_PER_TURN = 25;
+
+    #region Rebellion
+    public const float PERCENT_FOOD_LOST = .25f;
+    public const float PERCENT_SOLDIER_LOST = .25f;
+    public const float PERCENT_TERRITORY_LOST = .3f;
+    #endregion
+
+    #region Faction variables
+    public const float CHANCE_TO_SIEGE = .5f;
+    #endregion
+
     #region Turn Variables
     public const int STARVING_HAPPINESS = -10;
     public const int FED_HAPPINESS = 3;

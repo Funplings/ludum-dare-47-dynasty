@@ -64,11 +64,13 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadWin(){
+        GameManager.instance.state.m_currentDynasty.turnEnded = GameManager.instance.state.m_turn;
         SceneToLoad = WIN_SCENE;
         animator.SetTrigger("SwitchScene");
     }
 
     public void LoadLose(){
+        GameManager.instance.state.m_currentDynasty.turnEnded = GameManager.instance.state.m_turn;
         SceneToLoad = LOSE_SCENE;
         animator.SetTrigger("SwitchScene");
     }

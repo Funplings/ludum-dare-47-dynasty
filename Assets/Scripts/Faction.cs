@@ -63,4 +63,28 @@ public class Faction
         return ownedTiles.Count;
     }
 
+    public void AddSoldier(){
+        TileController tile = RandomFromList(ownedTiles);
+        tile.AddSoldier(1);
+    }
+    
+    public T RandomFromList<T>(List<T> list){
+        if(list.Count == 0){
+            return default(T);
+        }
+        return list[Random.Range(0, list.Count)];
+    } 
+
+    public void MaybeSiege(){
+        if(Random.value < Constants.CHANCE_TO_SIEGE){
+            //siege
+        }
+    }
+
+    public void RemoveAllSoldiers(){
+        foreach(TileController tile in ownedTiles){
+            tile.SetSoldier(0);
+        }
+    }
+
 }

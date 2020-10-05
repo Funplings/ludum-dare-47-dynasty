@@ -8,7 +8,7 @@ using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     [Header("UIs")]
-    [SerializeField] private GameObject mapUI;
+    [SerializeField] private CanvasGroup mapUI;
     [SerializeField] private GameObject rebellionUI;
     
     [Header("Info UI")]
@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private EmpireControl m_feedControl;
     [SerializeField] private EmpireControl m_investControl;
     [SerializeField] private TMP_Text m_alertText;
+    [SerializeField] private TMP_Text m_noticeText;
 
     [Header("Map Manager")]
     [SerializeField] private MapManager m_MapManager;
@@ -83,35 +84,61 @@ public class UIManager : MonoBehaviour
         m_LabText.text = string.Format("Labs Owned: {0}", Faction.GetPlayer().LabCount());
 
     }
+
+    public void UpdateRebellion(int foodLost, int soldiersLost, int territoriesLost){
+        m_rebellion.UpdateText(foodLost, soldiersLost, territoriesLost);
+    }
     
     #endregion Map UI
     
-    public void ShowMapUI(bool state){
-        mapUI.SetActive(state);
+    public void ShowMapUI(bool state, float transitionTime = 0){
+        mapUI.interactable = state;
+        mapUI.DOFade(state ? 1 : 0, transitionTime);
     }
 
     public void ShowRebellionUI(bool state){
         rebellionUI.SetActive(state);
     }
 
+    private void NextRound(){
+        GameManager.instance.state.m_turn++;
+        ShowMapUI(true, .5f);
+    }
+
     public void PlayRound(){
         if(m_feedControl.AbleToPay() && m_investControl.AbleToPay()){
-            m_feedControl.Pay();
-            m_investControl.Pay();
-            UpdateFoodCount();
-            UpdateMoneyCount();
-            UpdateHappinessCount();
-
-            TileController.ExpandTiles();
-
-            if(GameManager.instance.state.m_Happiness == 0){
-                StartRebellion();
-            }
-            else if(GameManager.instance.state.m_Happiness == 100){
-                print("YOU WIN!");
-            }
+            ShowMapUI(false, .5f);
+            StartCoroutine(PlayRoundCoroutine());
         }
-        
+        else{
+            Notice("Invalid Empire Control!");
+        }
+    }
+
+    IEnumerator PlayRoundCoroutine(){
+
+        yield return new WaitForSeconds(.5f);
+
+        m_feedControl.Pay();
+        m_investControl.Pay();
+        UpdateFoodCount();
+        UpdateMoneyCount();
+        UpdateHappinessCount();
+
+        TileController.ExpandTiles();
+
+        if(Faction.GetPlayer().TerritoryCount() == 0){
+            GameManager.instance.LoadLose();
+        }
+        else if(GameManager.instance.state.m_Happiness == 0){
+            StartRebellion();
+        }
+        else if(GameManager.instance.state.m_Happiness == 100){
+            GameManager.instance.LoadWin();
+        }
+
+        NextRound();
+
     }
 
     public void StartRebellion(){
@@ -120,10 +147,7 @@ public class UIManager : MonoBehaviour
 
     //Animation Event
     public void SwitchToRebellion(){
-        //TODO fix abandoncount
-        //Lose food
-        //Lose soldiers
-        //Remove soldiers
+        m_MapManager.StartRebellion();
 
         ShowMapUI(false);
         ShowRebellionUI(true);
@@ -133,10 +157,16 @@ public class UIManager : MonoBehaviour
     public void EndRebellion(){
         //check for territories, if not satisfied return
         if (TileController.GetAbandonedTilesCount() < MapManager.GetAbandonCount()) {
+            Notice("You haven't abandoned enough tiles!");
             return;
         }
         TileController.AbandonTiles();
         TileController.SetMode(Constants.DEFAULT_MODE);
+
+        if(Faction.GetPlayer().TerritoryCount() == 0){
+            GameManager.instance.LoadLose();
+        }
+
         ShowRebellionUI(false);
         m_MapManager.EndDynasty();
     }
@@ -147,5 +177,11 @@ public class UIManager : MonoBehaviour
         m_alertText.transform.DOComplete();
         m_alertText.DOFade(1, .5f).OnComplete(() => m_alertText.DOFade(0, .5f));
         m_alertText.rectTransform.DOAnchorPosY(100, 1).OnComplete(() => m_alertText.rectTransform.anchoredPosition = Vector2.zero);
+    }
+
+    public void Notice(string notice){
+        m_noticeText.text = notice;
+        m_noticeText.DOKill();
+        m_noticeText.DOFade(1, .1f).OnComplete(() => m_noticeText.DOFade(0, 1f).SetDelay(.2f));
     }
 }
