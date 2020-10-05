@@ -100,9 +100,9 @@ public class Faction
         TileController tileToExpand = RandomFromList(canExpandTiles);
         TileController expandToTile = RandomFromList(tileToExpand.ExpandOptions());
 
-        if(expandToTile.GetTileType() != TileController.TileType.NONE){
+        if(expandToTile.GetFaction() != Faction.None){
             //Siege
-            bool success = Random.value < TileController.InvasionChance(tileToExpand.GetSoldier(), expandToTile.m_ExpandTarget.GetSoldier());
+            bool success = Random.value < TileController.InvasionChance(tileToExpand.GetSoldier(), expandToTile.GetSoldier());
             if(success){
                 expandToTile.SetFaction(tileToExpand.GetFaction());
                 expandToTile.SetSoldier(tileToExpand.GetSoldier() - 1);

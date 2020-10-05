@@ -30,7 +30,7 @@ public class GameState
 
     //Revenue per territory
     public int RevenuePerTerritory(){
-        return m_perks.Contains(Perk.INVEST) ? Constants.PERK_TERRITORY_REVENUE : Constants.TERRITORY_REVENUE;
+        return m_perks.Contains(Perk.WEALTH) ? Constants.PERK_TERRITORY_REVENUE : Constants.TERRITORY_REVENUE;
     }
 
     //Cost of feeding

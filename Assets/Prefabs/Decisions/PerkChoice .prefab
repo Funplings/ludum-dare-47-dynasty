@@ -142,8 +142,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Double Money
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 87f6be7d5750b47108c2cbd9cf084c0a, type: 2}
+  m_sharedMaterial: {fileID: 6492911324943808990, guid: 87f6be7d5750b47108c2cbd9cf084c0a,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -319,7 +320,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.37300003, y: 1}
-  m_AnchoredPosition: {x: -130.4001, y: 0}
+  m_AnchoredPosition: {x: -130.40012, y: 0}
   m_SizeDelta: {x: -77, y: -65}
   m_Pivot: {x: 2.2, y: 0.5}
 --- !u!222 &7418685094218722875
@@ -413,13 +414,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2335210455995696565}
-        m_TargetAssemblyTypeName: PerkChoice, Assembly-CSharp
-        m_MethodName: Toggle
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DecisionManager, Assembly-CSharp
+        m_MethodName: TogglePerk
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2335210455995696565}
+          m_ObjectArgumentAssemblyTypeName: PerkChoice, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -438,6 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   check: {fileID: 6114880746476912662}
+  perk: 0
   status: 0
 --- !u!1 &3857084019552002495
 GameObject:
