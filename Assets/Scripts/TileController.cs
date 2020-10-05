@@ -359,7 +359,8 @@ public class TileController: MonoBehaviour
         m_ExpansionIcon = Instantiate(m_ExpansionIconPrefab, transform);
 
         // Expansion cover should be a semi-transparent version of the player faction color
-        m_ExpansionIcon.GetComponent<SpriteRenderer>().color = Color.red;
+        Color p = Faction.GetPlayer().m_Color;
+        m_ExpansionIcon.GetComponent<SpriteRenderer>().color = new Color(p.r, p.g, p.b, 0.5f);
 
         // Add self to expansion options list
         m_ExpansionOptions.Add(this);
